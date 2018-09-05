@@ -28,11 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.btClient = new System.Windows.Forms.Button();
             this.btServer = new System.Windows.Forms.Button();
             this.tbIPAddress = new System.Windows.Forms.TextBox();
             this.cbVerify = new System.Windows.Forms.CheckBox();
+            this.tooltip = new System.Windows.Forms.ToolTip(this.components);
+            this.cbDebug = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // btClient
@@ -42,7 +45,7 @@
             this.btClient.Name = "btClient";
             this.btClient.Size = new System.Drawing.Size(177, 68);
             this.btClient.TabIndex = 0;
-            this.btClient.Text = "Client";
+            this.btClient.Text = "#1 Cliente";
             this.btClient.UseVisualStyleBackColor = true;
             // 
             // btServer
@@ -52,7 +55,7 @@
             this.btServer.Name = "btServer";
             this.btServer.Size = new System.Drawing.Size(177, 68);
             this.btServer.TabIndex = 1;
-            this.btServer.Text = "Server";
+            this.btServer.Text = "#2 Servidor";
             this.btServer.UseVisualStyleBackColor = true;
             // 
             // tbIPAddress
@@ -78,11 +81,29 @@
             this.cbVerify.Text = "Intento de conexión infinito";
             this.cbVerify.UseVisualStyleBackColor = true;
             // 
+            // tooltip
+            // 
+            this.tooltip.AutoPopDelay = 10000;
+            this.tooltip.InitialDelay = 500;
+            this.tooltip.IsBalloon = true;
+            this.tooltip.ReshowDelay = 100;
+            // 
+            // cbDebug
+            // 
+            this.cbDebug.AutoSize = true;
+            this.cbDebug.Location = new System.Drawing.Point(12, 122);
+            this.cbDebug.Name = "cbDebug";
+            this.cbDebug.Size = new System.Drawing.Size(58, 17);
+            this.cbDebug.TabIndex = 4;
+            this.cbDebug.Text = "Debug";
+            this.cbDebug.UseVisualStyleBackColor = true;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(386, 147);
+            this.Controls.Add(this.cbDebug);
             this.Controls.Add(this.cbVerify);
             this.Controls.Add(this.tbIPAddress);
             this.Controls.Add(this.btServer);
@@ -104,6 +125,8 @@
         private System.Windows.Forms.Button btServer;
         private System.Windows.Forms.TextBox tbIPAddress;
         private System.Windows.Forms.CheckBox cbVerify;
+        private System.Windows.Forms.ToolTip tooltip;
+        private System.Windows.Forms.CheckBox cbDebug;
     }
 }
 
