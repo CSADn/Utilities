@@ -3,7 +3,7 @@ name: Deploy mitube.service to MonsterASP.NET
 on:
   pull_request:
     branches:
-      - main
+      - master
     types:
       - closed
     paths:
