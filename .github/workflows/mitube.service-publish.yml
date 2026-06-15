@@ -24,7 +24,7 @@ jobs:
           dotnet-version: '10.0.x'
 
       - name: Restore dependencies
-        run: dotnet restore "./Dash MPD Player/mitube.service/mitube.service.sln"
+        run: dotnet restore "./Dash MPD Player/mitube.service/mitube.service.sln" --runtime win-x86
 
       - name: Build solution
         run: dotnet build "./Dash MPD Player/mitube.service/mitube.service.sln" --configuration Release --no-restore
