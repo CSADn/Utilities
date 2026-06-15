@@ -1,28 +1,39 @@
-name: Build, publish and deploy to MonsterASP.NET
-on: [push]
+name: Deploy mitube.service to MonsterASP.NET
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - closed
+    paths:
+      - 'Dash MPD Player/mitube.service/**'
 
 jobs:
   build_and_deploy:
+    if: github.event.pull_request.merged == true
     runs-on: windows-latest
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Setup .NET 10
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 10.0
-          
-      - name: Install dependencies
-        run: dotnet restore
-        
-      - name: Build
-        run: dotnet build --configuration Release --no-restore
+          dotnet-version: '10.0.x'
 
-      - name: Publish
-        run: dotnet publish --configuration Release --output ./publish --runtime win-x86 
-        
-      - name: Test with .NET
-        run: dotnet test
+      - name: Restore dependencies
+        run: dotnet restore "./Dash MPD Player/mitube.service/mitube.service.sln"
+
+      - name: Build solution
+        run: dotnet build "./Dash MPD Player/mitube.service/mitube.service.sln" --configuration Release --no-restore
+
+      - name: Run tests
+        run: dotnet test "./Dash MPD Player/mitube.service/mitube.service.sln" --configuration Release --no-build
+
+      - name: Publish application
+        run: dotnet publish "./Dash MPD Player/mitube.service/mitube.service.sln" --configuration Release --output ./publish --runtime win-x86 --no-build
 
       - name: Deploy to MonsterASP.NET via WebDeploy
         uses: rasmusbuchholdt/simply-web-deploy@2.1.0
