@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000">
+
+    <FrameLayout
+        android:id="@+id/playerContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:id="@+id/playerOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="8dp"
+        android:background="#80000000"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/playerBackBtn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:padding="8dp"
+            android:src="@android:drawable/ic_menu_close_clear_cancel"
+            android:tint="#ffffff"
+            android:contentDescription="Cerrar" />
+
+        <TextView
+            android:id="@+id/playerChannelName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingHorizontal="8dp"
+            android:textColor="#ffffff"
+            android:textSize="16sp"
+            android:singleLine="true"
+            android:ellipsize="end" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="⚡ EN VIVO"
+            android:textColor="#4caf50"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:padding="4dp"
+            android:background="#33ffffff" />
+    </LinearLayout>
+
+</FrameLayout>

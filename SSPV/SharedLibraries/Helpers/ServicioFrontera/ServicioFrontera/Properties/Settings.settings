@@ -1,0 +1,9 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="ServicioFrontera.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="ServicioFrontera_ServicioFrontera_servicioFrontera" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://wsfrontera2.sondeosglobal.com/service.php</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

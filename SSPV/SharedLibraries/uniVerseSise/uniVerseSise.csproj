@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0813B183-F9F1-4DC9-959F-E35300244449}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>uniVerseSise</RootNamespace>
+    <AssemblyName>uniVerseSise</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.2.0\lib\net45\NLog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UODOTNET, Version=2.170.2.7539, Culture=neutral, PublicKeyToken=335f3fbd4be82339, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libs\UODOTNET.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AP\FPolizas.cs" />
+    <Compile Include="Configuracion\ConstantesConfig.cs" />
+    <Compile Include="Configuracion\DatoCampoAttribute.cs" />
+    <Compile Include="Configuracion\NombreArchivoAttribute.cs" />
+    <Compile Include="Constantes.cs" />
+    <Compile Include="DBManager\ConexionUV.cs" />
+    <Compile Include="Entidades\Actividad.cs" />
+    <Compile Include="Entidades\Cliente.cs" />
+    <Compile Include="Entidades\Nomina.cs" />
+    <Compile Include="Entidades\NominaSubgrupo.cs" />
+    <Compile Include="Entidades\Poliza.cs" />
+    <Compile Include="Entidades\PolizaCobertura.cs" />
+    <Compile Include="Entidades\PolizaSeccionItemTexto.cs" />
+    <Compile Include="Entidades\PolizaSeccionTexto.cs" />
+    <Compile Include="Entidades\Sucursal.cs" />
+    <Compile Include="Entidades\Test\Acto.cs" />
+    <Compile Include="Entidades\TipoEndoso.cs" />
+    <Compile Include="Entidades\TipoSubseccion.cs" />
+    <Compile Include="Entidades\UniDataSetResult.cs" />
+    <Compile Include="Entidades\UniSelectListResults.cs" />
+    <Compile Include="Helpers\Logger.cs" />
+    <Compile Include="Helpers\Singleton.cs" />
+    <Compile Include="Manager\ClientesManager.cs" />
+    <Compile Include="Manager\Filtros\FiltroPoliza.cs" />
+    <Compile Include="Manager\Helpers\AtrtibuteInspectorManager.cs" />
+    <Compile Include="Manager\Helpers\ConverterManager.cs" />
+    <Compile Include="Manager\LookupsManager.cs" />
+    <Compile Include="Manager\NominaManager.cs" />
+    <Compile Include="Manager\NominaSubgruposManager.cs" />
+    <Compile Include="Manager\PolizasCoberturasManager.cs" />
+    <Compile Include="Manager\PolizasManager.cs" />
+    <Compile Include="Manager\TablaManager.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Libs\UODOTNET.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Helpers\Utilities\utilities.csproj">
+      <Project>{49c1ac4d-91d4-4db2-b4f0-fba11aa2212c}</Project>
+      <Name>utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

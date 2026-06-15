@@ -1,0 +1,364 @@
+-- Merging decision tree log ---
+manifest
+ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\mobile\src\main\AndroidManifest.xml:2:1-39:12
+INJECTED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\mobile\src\main\AndroidManifest.xml:2:1-39:12
+INJECTED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\mobile\src\main\AndroidManifest.xml:2:1-39:12
+INJECTED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\mobile\src\main\AndroidManifest.xml:2:1-39:12
+MERGED from [:core] D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\core\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-7:12
+MERGED from [com.google.android.material:material:1.11.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\5788ebc1f0b9596b83fb690241025f23\transformed\material-1.11.0\AndroidManifest.xml:17:1-24:12
+MERGED from [io.coil-kt:coil:2.6.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\3d2e951b8c535489deb2f8701566a621\transformed\coil-2.6.0\AndroidManifest.xml:2:1-7:12
+MERGED from [io.coil-kt:coil-base:2.6.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\cf975d5ac996b7e6b1c13c5e455b26f4\transformed\coil-base-2.6.0\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.appcompat:appcompat-resources:1.6.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\90a0b599474c83afbd6cd0947060d285\transformed\appcompat-resources-1.6.1\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.constraintlayout:constraintlayout:2.0.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\443178fa0a04e30bfd712005a094f0c0\transformed\constraintlayout-2.0.1\AndroidManifest.xml:2:1-11:12
+MERGED from [androidx.appcompat:appcompat:1.6.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\62c2f4d849ef0912bb4f3744317e43a1\transformed\appcompat-1.6.1\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.recyclerview:recyclerview:1.3.2] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\9cd4dc2bc61edd003d167ce7f63ed29b\transformed\recyclerview-1.3.2\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.viewpager2:viewpager2:1.1.0-beta02] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\da7960a4581db9433b5ff6589a0874e2\transformed\viewpager2-1.1.0-beta02\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.fragment:fragment:1.7.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\c57a64480ea61e27d589fce6b0a1c4b7\transformed\fragment-1.7.1\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.fragment:fragment-ktx:1.7.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\cbb69e2329c5c5fbf6e91123673c15a1\transformed\fragment-ktx-1.7.1\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.1.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\ca712fd4f2be2f55d23bcd416355c716\transformed\swiperefreshlayout-1.1.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.webkit:webkit:1.10.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\2c0dad73521c969b10d0b5a4bb193837\transformed\webkit-1.10.0\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.emoji2:emoji2-views-helper:1.2.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\28a9ade6f100ce02c6c502159bf270d7\transformed\emoji2-views-helper-1.2.0\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.emoji2:emoji2:1.2.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\e22d8ca9f0b6778e47a8d03b7bd8bcda\transformed\emoji2-1.2.0\AndroidManifest.xml:17:1-35:12
+MERGED from [androidx.drawerlayout:drawerlayout:1.1.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\ce5c549c0087731b41b2bdd5d808e365\transformed\drawerlayout-1.1.1\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.1.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\0ea0767587171ea8fb668b72781cf5c6\transformed\coordinatorlayout-1.1.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.dynamicanimation:dynamicanimation:1.0.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\0baee495d428d43b7a578de310d5fa72\transformed\dynamicanimation-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.transition:transition:1.2.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\8f512f23df0a1825bb69d90730206794\transformed\transition-1.2.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\c40c21b5df5d6222d4849bf10572b687\transformed\vectordrawable-animated-1.1.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\45a1aa37dcda78a469c810a399990c73\transformed\vectordrawable-1.1.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\2d6deface3a7e699c3b110d28208a4f0\transformed\viewpager-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.customview:customview:1.1.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\1638ef3d6f7164ba3113affcb1c84852\transformed\customview-1.1.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\7ef8a84c635ecb345ca497f3f5730cb9\transformed\legacy-support-core-utils-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.activity:activity-ktx:1.8.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\189c3bee28bf8c88ba8584dd8ee78971\transformed\activity-ktx-1.8.1\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.activity:activity:1.8.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\11d06ca202b52aa0cecb92a98734e54b\transformed\activity-1.8.1\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.loader:loader:1.0.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\5e83b04a6a8d7facf360df9736d24c25\transformed\loader-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.core:core:1.12.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\cdc1a7f570ce9402faa050b8136da29f\transformed\core-1.12.0\AndroidManifest.xml:17:1-30:12
+MERGED from [androidx.customview:customview-poolingcontainer:1.0.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\d9fcd7adecc49088f0e75e34a2214c73\transformed\customview-poolingcontainer-1.0.0\AndroidManifest.xml:17:1-23:12
+MERGED from [androidx.savedstate:savedstate-ktx:1.2.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\5fcb8c758041c3af8a4c3be6941fdbe6\transformed\savedstate-ktx-1.2.1\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.savedstate:savedstate:1.2.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\ec72de238b55a1f2048290a1c76eac2f\transformed\savedstate-1.2.1\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.7.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\0460e20affb25d9048a375533c9a8982\transformed\lifecycle-livedata-2.7.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\13534179dea9a0401e37ea130413d216\transformed\lifecycle-viewmodel-ktx-2.7.0\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.7.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\ca72de1a6d3d62344c9167e530d334f1\transformed\lifecycle-viewmodel-2.7.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx:2.7.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\2dc782fbd6ef66621b57102180247732\transformed\lifecycle-runtime-ktx-2.7.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\2183ab98eb80bf3b5c37351e38607720\transformed\lifecycle-process-2.7.0\AndroidManifest.xml:17:1-35:12
+MERGED from [androidx.lifecycle:lifecycle-livedata-core-ktx:2.7.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\15aac753ee423906898ca325db838714\transformed\lifecycle-livedata-core-ktx-2.7.0\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.7.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\20349d936fe4070d2a54fd911965ce8c\transformed\lifecycle-livedata-core-2.7.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.7.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\5576a8859843d754e72ddd0d86a66679\transformed\lifecycle-runtime-2.7.0\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.7.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\141e3bb6927a88c995ce497e9a4cf663\transformed\lifecycle-viewmodel-savedstate-2.7.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.core:core-ktx:1.12.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\4e48e831a89afacee69313b66a802c09\transformed\core-ktx-1.12.0\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.annotation:annotation-experimental:1.4.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\8df59a43fa4cd53eb341a70bc53dca36\transformed\annotation-experimental-1.4.0\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.cardview:cardview:1.0.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\36eabf9cc00ce8991093411eff7a544e\transformed\cardview-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.security:security-crypto:1.1.0-alpha06] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\ec2c92f53bc88d9f5b447e0482743545\transformed\security-crypto-1.1.0-alpha06\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\64ff064727ff3e285ba16c6f5b892b8c\transformed\cursoradapter-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\5d0189564c37f3933f06a07800c313ad\transformed\interpolator-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\040ed8ca5ed1abd4c30ef79ce2f7f234\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:17:1-27:12
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\e0c9b04a7871042c784b2af2677c48c2\transformed\profileinstaller-1.3.1\AndroidManifest.xml:17:1-55:12
+MERGED from [androidx.exifinterface:exifinterface:1.3.7] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\99affe53450b7928747220943f8bde73\transformed\exifinterface-1.3.7\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.documentfile:documentfile:1.0.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\559340f9dffb782e2bbf20ec385442d1\transformed\documentfile-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\3df911c6c27077da1e50b22036cad979\transformed\localbroadcastmanager-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.print:print:1.0.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\4d9bfe84faa45778284d5137cfe54433\transformed\print-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\e9678b4cc7f19bdf6e0ec4ba4ceef2ff\transformed\startup-runtime-1.1.1\AndroidManifest.xml:17:1-33:12
+MERGED from [androidx.arch.core:core-runtime:2.2.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\8294235a88d801c216664f441fbbeab5\transformed\core-runtime-2.2.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.tracing:tracing:1.0.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\9498fb2c9918219975b78cc577b3fe21\transformed\tracing-1.0.0\AndroidManifest.xml:17:1-24:12
+	package
+		INJECTED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\mobile\src\main\AndroidManifest.xml
+	android:versionName
+		INJECTED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\mobile\src\main\AndroidManifest.xml
+	android:versionCode
+		INJECTED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\mobile\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\mobile\src\main\AndroidManifest.xml:2:11-69
+uses-permission#android.permission.INTERNET
+ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\mobile\src\main\AndroidManifest.xml:4:5-67
+	android:name
+		ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\mobile\src\main\AndroidManifest.xml:4:22-64
+uses-permission#android.permission.FOREGROUND_SERVICE
+ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\mobile\src\main\AndroidManifest.xml:5:5-77
+	android:name
+		ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\mobile\src\main\AndroidManifest.xml:5:22-74
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\mobile\src\main\AndroidManifest.xml:6:5-79
+	android:name
+		ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\mobile\src\main\AndroidManifest.xml:6:22-76
+application
+ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\mobile\src\main\AndroidManifest.xml:8:5-37:19
+INJECTED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\mobile\src\main\AndroidManifest.xml:8:5-37:19
+MERGED from [com.google.android.material:material:1.11.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\5788ebc1f0b9596b83fb690241025f23\transformed\material-1.11.0\AndroidManifest.xml:22:5-20
+MERGED from [com.google.android.material:material:1.11.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\5788ebc1f0b9596b83fb690241025f23\transformed\material-1.11.0\AndroidManifest.xml:22:5-20
+MERGED from [androidx.constraintlayout:constraintlayout:2.0.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\443178fa0a04e30bfd712005a094f0c0\transformed\constraintlayout-2.0.1\AndroidManifest.xml:9:5-20
+MERGED from [androidx.constraintlayout:constraintlayout:2.0.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\443178fa0a04e30bfd712005a094f0c0\transformed\constraintlayout-2.0.1\AndroidManifest.xml:9:5-20
+MERGED from [androidx.emoji2:emoji2:1.2.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\e22d8ca9f0b6778e47a8d03b7bd8bcda\transformed\emoji2-1.2.0\AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.emoji2:emoji2:1.2.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\e22d8ca9f0b6778e47a8d03b7bd8bcda\transformed\emoji2-1.2.0\AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.core:core:1.12.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\cdc1a7f570ce9402faa050b8136da29f\transformed\core-1.12.0\AndroidManifest.xml:28:5-89
+MERGED from [androidx.core:core:1.12.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\cdc1a7f570ce9402faa050b8136da29f\transformed\core-1.12.0\AndroidManifest.xml:28:5-89
+MERGED from [androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\2183ab98eb80bf3b5c37351e38607720\transformed\lifecycle-process-2.7.0\AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\2183ab98eb80bf3b5c37351e38607720\transformed\lifecycle-process-2.7.0\AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\040ed8ca5ed1abd4c30ef79ce2f7f234\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:24:5-25:19
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\040ed8ca5ed1abd4c30ef79ce2f7f234\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:24:5-25:19
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\e0c9b04a7871042c784b2af2677c48c2\transformed\profileinstaller-1.3.1\AndroidManifest.xml:23:5-53:19
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\e0c9b04a7871042c784b2af2677c48c2\transformed\profileinstaller-1.3.1\AndroidManifest.xml:23:5-53:19
+MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\e9678b4cc7f19bdf6e0ec4ba4ceef2ff\transformed\startup-runtime-1.1.1\AndroidManifest.xml:25:5-31:19
+MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\e9678b4cc7f19bdf6e0ec4ba4ceef2ff\transformed\startup-runtime-1.1.1\AndroidManifest.xml:25:5-31:19
+	android:extractNativeLibs
+		INJECTED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\mobile\src\main\AndroidManifest.xml
+	android:appComponentFactory
+		ADDED from [androidx.core:core:1.12.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\cdc1a7f570ce9402faa050b8136da29f\transformed\core-1.12.0\AndroidManifest.xml:28:18-86
+	android:label
+		ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\mobile\src\main\AndroidManifest.xml:12:9-31
+	android:icon
+		ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\mobile\src\main\AndroidManifest.xml:11:9-43
+	android:allowBackup
+		ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\mobile\src\main\AndroidManifest.xml:10:9-35
+	android:theme
+		ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\mobile\src\main\AndroidManifest.xml:13:9-44
+	android:usesCleartextTraffic
+		ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\mobile\src\main\AndroidManifest.xml:14:9-44
+	android:name
+		ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\mobile\src\main\AndroidManifest.xml:9:9-40
+activity#com.mitube.mobile.ui.LoginActivity
+ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\mobile\src\main\AndroidManifest.xml:16:9-24:20
+	android:exported
+		ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\mobile\src\main\AndroidManifest.xml:18:13-36
+	android:theme
+		ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\mobile\src\main\AndroidManifest.xml:19:13-48
+	android:name
+		ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\mobile\src\main\AndroidManifest.xml:17:13-45
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\mobile\src\main\AndroidManifest.xml:20:13-23:29
+action#android.intent.action.MAIN
+ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\mobile\src\main\AndroidManifest.xml:21:17-69
+	android:name
+		ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\mobile\src\main\AndroidManifest.xml:21:25-66
+category#android.intent.category.LAUNCHER
+ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\mobile\src\main\AndroidManifest.xml:22:17-77
+	android:name
+		ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\mobile\src\main\AndroidManifest.xml:22:27-74
+activity#com.mitube.mobile.ui.HomeActivity
+ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\mobile\src\main\AndroidManifest.xml:26:9-53
+	android:name
+		ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\mobile\src\main\AndroidManifest.xml:26:19-50
+activity#com.mitube.mobile.ui.PlayerActivity
+ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\mobile\src\main\AndroidManifest.xml:27:9-31:63
+	android:screenOrientation
+		ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\mobile\src\main\AndroidManifest.xml:30:13-56
+	android:configChanges
+		ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\mobile\src\main\AndroidManifest.xml:29:13-87
+	android:theme
+		ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\mobile\src\main\AndroidManifest.xml:31:13-60
+	android:name
+		ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\mobile\src\main\AndroidManifest.xml:28:13-46
+service#com.mitube.core.service.ProxyForegroundService
+ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\mobile\src\main\AndroidManifest.xml:33:9-36:40
+	android:exported
+		ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\mobile\src\main\AndroidManifest.xml:36:13-37
+	android:foregroundServiceType
+		ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\mobile\src\main\AndroidManifest.xml:35:13-60
+	android:name
+		ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\mobile\src\main\AndroidManifest.xml:34:13-74
+uses-sdk
+INJECTED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\mobile\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\mobile\src\main\AndroidManifest.xml
+INJECTED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\mobile\src\main\AndroidManifest.xml
+MERGED from [:core] D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\core\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:core] D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\core\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.material:material:1.11.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\5788ebc1f0b9596b83fb690241025f23\transformed\material-1.11.0\AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.material:material:1.11.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\5788ebc1f0b9596b83fb690241025f23\transformed\material-1.11.0\AndroidManifest.xml:20:5-44
+MERGED from [io.coil-kt:coil:2.6.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\3d2e951b8c535489deb2f8701566a621\transformed\coil-2.6.0\AndroidManifest.xml:5:5-44
+MERGED from [io.coil-kt:coil:2.6.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\3d2e951b8c535489deb2f8701566a621\transformed\coil-2.6.0\AndroidManifest.xml:5:5-44
+MERGED from [io.coil-kt:coil-base:2.6.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\cf975d5ac996b7e6b1c13c5e455b26f4\transformed\coil-base-2.6.0\AndroidManifest.xml:5:5-44
+MERGED from [io.coil-kt:coil-base:2.6.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\cf975d5ac996b7e6b1c13c5e455b26f4\transformed\coil-base-2.6.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.appcompat:appcompat-resources:1.6.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\90a0b599474c83afbd6cd0947060d285\transformed\appcompat-resources-1.6.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.appcompat:appcompat-resources:1.6.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\90a0b599474c83afbd6cd0947060d285\transformed\appcompat-resources-1.6.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.constraintlayout:constraintlayout:2.0.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\443178fa0a04e30bfd712005a094f0c0\transformed\constraintlayout-2.0.1\AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.constraintlayout:constraintlayout:2.0.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\443178fa0a04e30bfd712005a094f0c0\transformed\constraintlayout-2.0.1\AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.appcompat:appcompat:1.6.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\62c2f4d849ef0912bb4f3744317e43a1\transformed\appcompat-1.6.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.appcompat:appcompat:1.6.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\62c2f4d849ef0912bb4f3744317e43a1\transformed\appcompat-1.6.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.recyclerview:recyclerview:1.3.2] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\9cd4dc2bc61edd003d167ce7f63ed29b\transformed\recyclerview-1.3.2\AndroidManifest.xml:20:5-44
+MERGED from [androidx.recyclerview:recyclerview:1.3.2] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\9cd4dc2bc61edd003d167ce7f63ed29b\transformed\recyclerview-1.3.2\AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager2:viewpager2:1.1.0-beta02] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\da7960a4581db9433b5ff6589a0874e2\transformed\viewpager2-1.1.0-beta02\AndroidManifest.xml:5:5-44
+MERGED from [androidx.viewpager2:viewpager2:1.1.0-beta02] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\da7960a4581db9433b5ff6589a0874e2\transformed\viewpager2-1.1.0-beta02\AndroidManifest.xml:5:5-44
+MERGED from [androidx.fragment:fragment:1.7.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\c57a64480ea61e27d589fce6b0a1c4b7\transformed\fragment-1.7.1\AndroidManifest.xml:5:5-44
+MERGED from [androidx.fragment:fragment:1.7.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\c57a64480ea61e27d589fce6b0a1c4b7\transformed\fragment-1.7.1\AndroidManifest.xml:5:5-44
+MERGED from [androidx.fragment:fragment-ktx:1.7.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\cbb69e2329c5c5fbf6e91123673c15a1\transformed\fragment-ktx-1.7.1\AndroidManifest.xml:5:5-44
+MERGED from [androidx.fragment:fragment-ktx:1.7.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\cbb69e2329c5c5fbf6e91123673c15a1\transformed\fragment-ktx-1.7.1\AndroidManifest.xml:5:5-44
+MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.1.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\ca712fd4f2be2f55d23bcd416355c716\transformed\swiperefreshlayout-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.1.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\ca712fd4f2be2f55d23bcd416355c716\transformed\swiperefreshlayout-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.webkit:webkit:1.10.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\2c0dad73521c969b10d0b5a4bb193837\transformed\webkit-1.10.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.webkit:webkit:1.10.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\2c0dad73521c969b10d0b5a4bb193837\transformed\webkit-1.10.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.emoji2:emoji2-views-helper:1.2.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\28a9ade6f100ce02c6c502159bf270d7\transformed\emoji2-views-helper-1.2.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.emoji2:emoji2-views-helper:1.2.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\28a9ade6f100ce02c6c502159bf270d7\transformed\emoji2-views-helper-1.2.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.emoji2:emoji2:1.2.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\e22d8ca9f0b6778e47a8d03b7bd8bcda\transformed\emoji2-1.2.0\AndroidManifest.xml:21:5-44
+MERGED from [androidx.emoji2:emoji2:1.2.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\e22d8ca9f0b6778e47a8d03b7bd8bcda\transformed\emoji2-1.2.0\AndroidManifest.xml:21:5-44
+MERGED from [androidx.drawerlayout:drawerlayout:1.1.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\ce5c549c0087731b41b2bdd5d808e365\transformed\drawerlayout-1.1.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.drawerlayout:drawerlayout:1.1.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\ce5c549c0087731b41b2bdd5d808e365\transformed\drawerlayout-1.1.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.1.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\0ea0767587171ea8fb668b72781cf5c6\transformed\coordinatorlayout-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.1.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\0ea0767587171ea8fb668b72781cf5c6\transformed\coordinatorlayout-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.dynamicanimation:dynamicanimation:1.0.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\0baee495d428d43b7a578de310d5fa72\transformed\dynamicanimation-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.dynamicanimation:dynamicanimation:1.0.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\0baee495d428d43b7a578de310d5fa72\transformed\dynamicanimation-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.transition:transition:1.2.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\8f512f23df0a1825bb69d90730206794\transformed\transition-1.2.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.transition:transition:1.2.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\8f512f23df0a1825bb69d90730206794\transformed\transition-1.2.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\c40c21b5df5d6222d4849bf10572b687\transformed\vectordrawable-animated-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\c40c21b5df5d6222d4849bf10572b687\transformed\vectordrawable-animated-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\45a1aa37dcda78a469c810a399990c73\transformed\vectordrawable-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\45a1aa37dcda78a469c810a399990c73\transformed\vectordrawable-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\2d6deface3a7e699c3b110d28208a4f0\transformed\viewpager-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\2d6deface3a7e699c3b110d28208a4f0\transformed\viewpager-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview:1.1.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\1638ef3d6f7164ba3113affcb1c84852\transformed\customview-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.customview:customview:1.1.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\1638ef3d6f7164ba3113affcb1c84852\transformed\customview-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\7ef8a84c635ecb345ca497f3f5730cb9\transformed\legacy-support-core-utils-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\7ef8a84c635ecb345ca497f3f5730cb9\transformed\legacy-support-core-utils-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.activity:activity-ktx:1.8.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\189c3bee28bf8c88ba8584dd8ee78971\transformed\activity-ktx-1.8.1\AndroidManifest.xml:5:5-44
+MERGED from [androidx.activity:activity-ktx:1.8.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\189c3bee28bf8c88ba8584dd8ee78971\transformed\activity-ktx-1.8.1\AndroidManifest.xml:5:5-44
+MERGED from [androidx.activity:activity:1.8.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\11d06ca202b52aa0cecb92a98734e54b\transformed\activity-1.8.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.activity:activity:1.8.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\11d06ca202b52aa0cecb92a98734e54b\transformed\activity-1.8.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\5e83b04a6a8d7facf360df9736d24c25\transformed\loader-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\5e83b04a6a8d7facf360df9736d24c25\transformed\loader-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core:1.12.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\cdc1a7f570ce9402faa050b8136da29f\transformed\core-1.12.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core:1.12.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\cdc1a7f570ce9402faa050b8136da29f\transformed\core-1.12.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview-poolingcontainer:1.0.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\d9fcd7adecc49088f0e75e34a2214c73\transformed\customview-poolingcontainer-1.0.0\AndroidManifest.xml:20:5-21:38
+MERGED from [androidx.customview:customview-poolingcontainer:1.0.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\d9fcd7adecc49088f0e75e34a2214c73\transformed\customview-poolingcontainer-1.0.0\AndroidManifest.xml:20:5-21:38
+MERGED from [androidx.savedstate:savedstate-ktx:1.2.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\5fcb8c758041c3af8a4c3be6941fdbe6\transformed\savedstate-ktx-1.2.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate-ktx:1.2.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\5fcb8c758041c3af8a4c3be6941fdbe6\transformed\savedstate-ktx-1.2.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate:1.2.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\ec72de238b55a1f2048290a1c76eac2f\transformed\savedstate-1.2.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate:1.2.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\ec72de238b55a1f2048290a1c76eac2f\transformed\savedstate-1.2.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.7.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\0460e20affb25d9048a375533c9a8982\transformed\lifecycle-livedata-2.7.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.7.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\0460e20affb25d9048a375533c9a8982\transformed\lifecycle-livedata-2.7.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\13534179dea9a0401e37ea130413d216\transformed\lifecycle-viewmodel-ktx-2.7.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\13534179dea9a0401e37ea130413d216\transformed\lifecycle-viewmodel-ktx-2.7.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.7.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\ca72de1a6d3d62344c9167e530d334f1\transformed\lifecycle-viewmodel-2.7.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.7.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\ca72de1a6d3d62344c9167e530d334f1\transformed\lifecycle-viewmodel-2.7.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx:2.7.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\2dc782fbd6ef66621b57102180247732\transformed\lifecycle-runtime-ktx-2.7.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx:2.7.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\2dc782fbd6ef66621b57102180247732\transformed\lifecycle-runtime-ktx-2.7.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\2183ab98eb80bf3b5c37351e38607720\transformed\lifecycle-process-2.7.0\AndroidManifest.xml:21:5-44
+MERGED from [androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\2183ab98eb80bf3b5c37351e38607720\transformed\lifecycle-process-2.7.0\AndroidManifest.xml:21:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core-ktx:2.7.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\15aac753ee423906898ca325db838714\transformed\lifecycle-livedata-core-ktx-2.7.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core-ktx:2.7.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\15aac753ee423906898ca325db838714\transformed\lifecycle-livedata-core-ktx-2.7.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.7.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\20349d936fe4070d2a54fd911965ce8c\transformed\lifecycle-livedata-core-2.7.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.7.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\20349d936fe4070d2a54fd911965ce8c\transformed\lifecycle-livedata-core-2.7.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.7.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\5576a8859843d754e72ddd0d86a66679\transformed\lifecycle-runtime-2.7.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.7.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\5576a8859843d754e72ddd0d86a66679\transformed\lifecycle-runtime-2.7.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.7.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\141e3bb6927a88c995ce497e9a4cf663\transformed\lifecycle-viewmodel-savedstate-2.7.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.7.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\141e3bb6927a88c995ce497e9a4cf663\transformed\lifecycle-viewmodel-savedstate-2.7.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core-ktx:1.12.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\4e48e831a89afacee69313b66a802c09\transformed\core-ktx-1.12.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.core:core-ktx:1.12.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\4e48e831a89afacee69313b66a802c09\transformed\core-ktx-1.12.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.annotation:annotation-experimental:1.4.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\8df59a43fa4cd53eb341a70bc53dca36\transformed\annotation-experimental-1.4.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.annotation:annotation-experimental:1.4.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\8df59a43fa4cd53eb341a70bc53dca36\transformed\annotation-experimental-1.4.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.cardview:cardview:1.0.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\36eabf9cc00ce8991093411eff7a544e\transformed\cardview-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.cardview:cardview:1.0.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\36eabf9cc00ce8991093411eff7a544e\transformed\cardview-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.security:security-crypto:1.1.0-alpha06] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\ec2c92f53bc88d9f5b447e0482743545\transformed\security-crypto-1.1.0-alpha06\AndroidManifest.xml:20:5-44
+MERGED from [androidx.security:security-crypto:1.1.0-alpha06] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\ec2c92f53bc88d9f5b447e0482743545\transformed\security-crypto-1.1.0-alpha06\AndroidManifest.xml:20:5-44
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\64ff064727ff3e285ba16c6f5b892b8c\transformed\cursoradapter-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\64ff064727ff3e285ba16c6f5b892b8c\transformed\cursoradapter-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\5d0189564c37f3933f06a07800c313ad\transformed\interpolator-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\5d0189564c37f3933f06a07800c313ad\transformed\interpolator-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\040ed8ca5ed1abd4c30ef79ce2f7f234\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\040ed8ca5ed1abd4c30ef79ce2f7f234\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\e0c9b04a7871042c784b2af2677c48c2\transformed\profileinstaller-1.3.1\AndroidManifest.xml:21:5-44
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\e0c9b04a7871042c784b2af2677c48c2\transformed\profileinstaller-1.3.1\AndroidManifest.xml:21:5-44
+MERGED from [androidx.exifinterface:exifinterface:1.3.7] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\99affe53450b7928747220943f8bde73\transformed\exifinterface-1.3.7\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.exifinterface:exifinterface:1.3.7] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\99affe53450b7928747220943f8bde73\transformed\exifinterface-1.3.7\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.documentfile:documentfile:1.0.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\559340f9dffb782e2bbf20ec385442d1\transformed\documentfile-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.documentfile:documentfile:1.0.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\559340f9dffb782e2bbf20ec385442d1\transformed\documentfile-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\3df911c6c27077da1e50b22036cad979\transformed\localbroadcastmanager-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\3df911c6c27077da1e50b22036cad979\transformed\localbroadcastmanager-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.print:print:1.0.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\4d9bfe84faa45778284d5137cfe54433\transformed\print-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.print:print:1.0.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\4d9bfe84faa45778284d5137cfe54433\transformed\print-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\e9678b4cc7f19bdf6e0ec4ba4ceef2ff\transformed\startup-runtime-1.1.1\AndroidManifest.xml:21:5-23:41
+MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\e9678b4cc7f19bdf6e0ec4ba4ceef2ff\transformed\startup-runtime-1.1.1\AndroidManifest.xml:21:5-23:41
+MERGED from [androidx.arch.core:core-runtime:2.2.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\8294235a88d801c216664f441fbbeab5\transformed\core-runtime-2.2.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.arch.core:core-runtime:2.2.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\8294235a88d801c216664f441fbbeab5\transformed\core-runtime-2.2.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.tracing:tracing:1.0.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\9498fb2c9918219975b78cc577b3fe21\transformed\tracing-1.0.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.tracing:tracing:1.0.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\9498fb2c9918219975b78cc577b3fe21\transformed\tracing-1.0.0\AndroidManifest.xml:20:5-22:41
+	android:targetSdkVersion
+		INJECTED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\mobile\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\mobile\src\main\AndroidManifest.xml
+provider#androidx.startup.InitializationProvider
+ADDED from [androidx.emoji2:emoji2:1.2.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\e22d8ca9f0b6778e47a8d03b7bd8bcda\transformed\emoji2-1.2.0\AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\2183ab98eb80bf3b5c37351e38607720\transformed\lifecycle-process-2.7.0\AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\2183ab98eb80bf3b5c37351e38607720\transformed\lifecycle-process-2.7.0\AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\e0c9b04a7871042c784b2af2677c48c2\transformed\profileinstaller-1.3.1\AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\e0c9b04a7871042c784b2af2677c48c2\transformed\profileinstaller-1.3.1\AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\e9678b4cc7f19bdf6e0ec4ba4ceef2ff\transformed\startup-runtime-1.1.1\AndroidManifest.xml:26:9-30:34
+MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\e9678b4cc7f19bdf6e0ec4ba4ceef2ff\transformed\startup-runtime-1.1.1\AndroidManifest.xml:26:9-30:34
+	tools:node
+		ADDED from [androidx.emoji2:emoji2:1.2.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\e22d8ca9f0b6778e47a8d03b7bd8bcda\transformed\emoji2-1.2.0\AndroidManifest.xml:28:13-31
+	android:authorities
+		ADDED from [androidx.emoji2:emoji2:1.2.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\e22d8ca9f0b6778e47a8d03b7bd8bcda\transformed\emoji2-1.2.0\AndroidManifest.xml:26:13-68
+	android:exported
+		ADDED from [androidx.emoji2:emoji2:1.2.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\e22d8ca9f0b6778e47a8d03b7bd8bcda\transformed\emoji2-1.2.0\AndroidManifest.xml:27:13-37
+	android:name
+		ADDED from [androidx.emoji2:emoji2:1.2.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\e22d8ca9f0b6778e47a8d03b7bd8bcda\transformed\emoji2-1.2.0\AndroidManifest.xml:25:13-67
+meta-data#androidx.emoji2.text.EmojiCompatInitializer
+ADDED from [androidx.emoji2:emoji2:1.2.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\e22d8ca9f0b6778e47a8d03b7bd8bcda\transformed\emoji2-1.2.0\AndroidManifest.xml:29:13-31:52
+	android:value
+		ADDED from [androidx.emoji2:emoji2:1.2.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\e22d8ca9f0b6778e47a8d03b7bd8bcda\transformed\emoji2-1.2.0\AndroidManifest.xml:31:17-49
+	android:name
+		ADDED from [androidx.emoji2:emoji2:1.2.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\e22d8ca9f0b6778e47a8d03b7bd8bcda\transformed\emoji2-1.2.0\AndroidManifest.xml:30:17-75
+permission#${applicationId}.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.12.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\cdc1a7f570ce9402faa050b8136da29f\transformed\core-1.12.0\AndroidManifest.xml:22:5-24:47
+	android:protectionLevel
+		ADDED from [androidx.core:core:1.12.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\cdc1a7f570ce9402faa050b8136da29f\transformed\core-1.12.0\AndroidManifest.xml:24:9-44
+	android:name
+		ADDED from [androidx.core:core:1.12.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\cdc1a7f570ce9402faa050b8136da29f\transformed\core-1.12.0\AndroidManifest.xml:23:9-81
+permission#com.mitube.mobile.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.12.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\cdc1a7f570ce9402faa050b8136da29f\transformed\core-1.12.0\AndroidManifest.xml:22:5-24:47
+	android:protectionLevel
+		ADDED from [androidx.core:core:1.12.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\cdc1a7f570ce9402faa050b8136da29f\transformed\core-1.12.0\AndroidManifest.xml:24:9-44
+	android:name
+		ADDED from [androidx.core:core:1.12.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\cdc1a7f570ce9402faa050b8136da29f\transformed\core-1.12.0\AndroidManifest.xml:23:9-81
+uses-permission#${applicationId}.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.12.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\cdc1a7f570ce9402faa050b8136da29f\transformed\core-1.12.0\AndroidManifest.xml:26:5-97
+	android:name
+		ADDED from [androidx.core:core:1.12.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\cdc1a7f570ce9402faa050b8136da29f\transformed\core-1.12.0\AndroidManifest.xml:26:22-94
+uses-permission#com.mitube.mobile.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.12.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\cdc1a7f570ce9402faa050b8136da29f\transformed\core-1.12.0\AndroidManifest.xml:26:5-97
+	android:name
+		ADDED from [androidx.core:core:1.12.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\cdc1a7f570ce9402faa050b8136da29f\transformed\core-1.12.0\AndroidManifest.xml:26:22-94
+meta-data#androidx.lifecycle.ProcessLifecycleInitializer
+ADDED from [androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\2183ab98eb80bf3b5c37351e38607720\transformed\lifecycle-process-2.7.0\AndroidManifest.xml:29:13-31:52
+	android:value
+		ADDED from [androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\2183ab98eb80bf3b5c37351e38607720\transformed\lifecycle-process-2.7.0\AndroidManifest.xml:31:17-49
+	android:name
+		ADDED from [androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\2183ab98eb80bf3b5c37351e38607720\transformed\lifecycle-process-2.7.0\AndroidManifest.xml:30:17-78
+meta-data#androidx.profileinstaller.ProfileInstallerInitializer
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\e0c9b04a7871042c784b2af2677c48c2\transformed\profileinstaller-1.3.1\AndroidManifest.xml:29:13-31:52
+	android:value
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\e0c9b04a7871042c784b2af2677c48c2\transformed\profileinstaller-1.3.1\AndroidManifest.xml:31:17-49
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\e0c9b04a7871042c784b2af2677c48c2\transformed\profileinstaller-1.3.1\AndroidManifest.xml:30:17-85
+receiver#androidx.profileinstaller.ProfileInstallReceiver
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\e0c9b04a7871042c784b2af2677c48c2\transformed\profileinstaller-1.3.1\AndroidManifest.xml:34:9-52:20
+	android:enabled
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\e0c9b04a7871042c784b2af2677c48c2\transformed\profileinstaller-1.3.1\AndroidManifest.xml:37:13-35
+	android:exported
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\e0c9b04a7871042c784b2af2677c48c2\transformed\profileinstaller-1.3.1\AndroidManifest.xml:38:13-36
+	android:permission
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\e0c9b04a7871042c784b2af2677c48c2\transformed\profileinstaller-1.3.1\AndroidManifest.xml:39:13-57
+	android:directBootAware
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\e0c9b04a7871042c784b2af2677c48c2\transformed\profileinstaller-1.3.1\AndroidManifest.xml:36:13-44
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\e0c9b04a7871042c784b2af2677c48c2\transformed\profileinstaller-1.3.1\AndroidManifest.xml:35:13-76
+intent-filter#action:name:androidx.profileinstaller.action.INSTALL_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\e0c9b04a7871042c784b2af2677c48c2\transformed\profileinstaller-1.3.1\AndroidManifest.xml:40:13-42:29
+action#androidx.profileinstaller.action.INSTALL_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\e0c9b04a7871042c784b2af2677c48c2\transformed\profileinstaller-1.3.1\AndroidManifest.xml:41:17-91
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\e0c9b04a7871042c784b2af2677c48c2\transformed\profileinstaller-1.3.1\AndroidManifest.xml:41:25-88
+intent-filter#action:name:androidx.profileinstaller.action.SKIP_FILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\e0c9b04a7871042c784b2af2677c48c2\transformed\profileinstaller-1.3.1\AndroidManifest.xml:43:13-45:29
+action#androidx.profileinstaller.action.SKIP_FILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\e0c9b04a7871042c784b2af2677c48c2\transformed\profileinstaller-1.3.1\AndroidManifest.xml:44:17-85
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\e0c9b04a7871042c784b2af2677c48c2\transformed\profileinstaller-1.3.1\AndroidManifest.xml:44:25-82
+intent-filter#action:name:androidx.profileinstaller.action.SAVE_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\e0c9b04a7871042c784b2af2677c48c2\transformed\profileinstaller-1.3.1\AndroidManifest.xml:46:13-48:29
+action#androidx.profileinstaller.action.SAVE_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\e0c9b04a7871042c784b2af2677c48c2\transformed\profileinstaller-1.3.1\AndroidManifest.xml:47:17-88
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\e0c9b04a7871042c784b2af2677c48c2\transformed\profileinstaller-1.3.1\AndroidManifest.xml:47:25-85
+intent-filter#action:name:androidx.profileinstaller.action.BENCHMARK_OPERATION
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\e0c9b04a7871042c784b2af2677c48c2\transformed\profileinstaller-1.3.1\AndroidManifest.xml:49:13-51:29
+action#androidx.profileinstaller.action.BENCHMARK_OPERATION
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\e0c9b04a7871042c784b2af2677c48c2\transformed\profileinstaller-1.3.1\AndroidManifest.xml:50:17-95
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\e0c9b04a7871042c784b2af2677c48c2\transformed\profileinstaller-1.3.1\AndroidManifest.xml:50:25-92

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:background="#000000">
+
+    <ImageView
+        android:id="@+id/loginHeader"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/login_header"
+        android:contentDescription="MiTube"
+        android:adjustViewBounds="true"
+        android:layout_marginBottom="32dp" />
+
+    <EditText
+        android:id="@+id/serverUrl"
+        android:layout_width="240dp"
+        android:layout_height="48dp"
+        android:hint="URL del servidor (ej: http://192.168.1.100:5000)"
+        android:textColor="#ffffff"
+        android:textColorHint="#888888"
+        android:background="@drawable/bg_input"
+        android:padding="12dp"
+        android:inputType="textUri"
+        android:imeOptions="actionNext"
+        android:layout_marginBottom="12dp" />
+
+    <EditText
+        android:id="@+id/username"
+        android:layout_width="240dp"
+        android:layout_height="48dp"
+        android:hint="Usuario"
+        android:textColor="#ffffff"
+        android:textColorHint="#888888"
+        android:background="@drawable/bg_input"
+        android:padding="12dp"
+        android:inputType="text"
+        android:imeOptions="actionNext"
+        android:layout_marginBottom="12dp" />
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="240dp"
+        android:layout_height="48dp"
+        android:hint="Contraseña"
+        android:textColor="#ffffff"
+        android:textColorHint="#888888"
+        android:background="@drawable/bg_input"
+        android:padding="12dp"
+        android:inputType="textPassword"
+        android:imeOptions="actionDone"
+        android:layout_marginBottom="24dp" />
+
+    <Button
+        android:id="@+id/loginBtn"
+        android:layout_width="240dp"
+        android:layout_height="48dp"
+        android:text="Ingresar"
+        android:textAllCaps="false"
+        android:backgroundTint="#005a9e" />
+
+</LinearLayout>

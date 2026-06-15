@@ -1,0 +1,12 @@
+-- Seed de usuarios para mitube.service
+-- Insertar usuarios manualmente con BCrypt hash
+-- Generar hash en https://bcrypt-generator.com/
+--
+-- Usuario existente en DB:
+--   Username: adn
+--   Password: 123456La
+--   Hash: $2a$11$gpqCRQOwALco6B7B4q/FT.J84v0FmxRavuGYoz6Ynn4YUibmSTA6y
+--
+-- Ejemplo para agregar otro usuario:
+-- INSERT INTO Users (Username, PasswordHash, DisplayName, CreatedAt, IsActive)
+-- VALUES ('username', '$2a$11$...hash...', 'Display Name', datetime('now'), 1);

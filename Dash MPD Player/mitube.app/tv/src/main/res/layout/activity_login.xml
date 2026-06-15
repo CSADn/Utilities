@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:background="#000000">
+
+    <ImageView
+        android:id="@+id/loginHeader"
+        android:layout_width="480dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/login_header"
+        android:contentDescription="MiTube TV"
+        android:adjustViewBounds="true"
+        android:layout_marginBottom="48dp" />
+
+    <EditText
+        android:id="@+id/serverUrl"
+        android:layout_width="480dp"
+        android:layout_height="56dp"
+        android:hint="URL del servidor"
+        android:textColor="#ffffff"
+        android:padding="16dp"
+        android:inputType="textUri"
+        android:imeOptions="actionNext"
+        android:layout_marginBottom="16dp" />
+
+    <EditText
+        android:id="@+id/username"
+        android:layout_width="480dp"
+        android:layout_height="56dp"
+        android:hint="Usuario"
+        android:textColor="#ffffff"
+        android:padding="16dp"
+        android:inputType="text"
+        android:imeOptions="actionNext"
+        android:layout_marginBottom="16dp" />
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="480dp"
+        android:layout_height="56dp"
+        android:hint="Contraseña"
+        android:textColor="#ffffff"
+        android:padding="16dp"
+        android:inputType="textPassword"
+        android:imeOptions="actionDone"
+        android:layout_marginBottom="32dp" />
+
+    <Button
+        android:id="@+id/loginBtn"
+        android:layout_width="480dp"
+        android:layout_height="56dp"
+        android:text="Ingresar"
+        android:textSize="18sp" />
+
+</LinearLayout>

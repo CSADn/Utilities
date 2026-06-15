@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="urn:servicioFrontera" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="urn:servicioFrontera" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="urn:servicioFrontera">
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/" />
+      <xsd:complexType name="order">
+        <xsd:sequence>
+          <xsd:any />
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ejecutarRequest">
+    <wsdl:part name="xmlOrder" type="tns:order" />
+  </wsdl:message>
+  <wsdl:message name="ejecutarResponse">
+    <wsdl:part name="return" type="tns:order" />
+  </wsdl:message>
+  <wsdl:portType name="servicioFronteraPortType">
+    <wsdl:operation name="ejecutar">
+      <documentation>Metodo utilizado para ejecutar una orden</documentation>
+      <wsdl:input message="tns:ejecutarRequest" />
+      <wsdl:output message="tns:ejecutarResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="servicioFronteraBinding" type="tns:servicioFronteraPortType">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <wsdl:operation name="ejecutar">
+      <soap:operation soapAction="urn:servicioFrontera#ejecutar" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="urn:servicioFrontera" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="urn:servicioFrontera" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="servicioFrontera">
+    <wsdl:port name="servicioFronteraPort" binding="tns:servicioFronteraBinding">
+      <soap:address location="http://wsfrontera2.sondeosglobal.com/service.php" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

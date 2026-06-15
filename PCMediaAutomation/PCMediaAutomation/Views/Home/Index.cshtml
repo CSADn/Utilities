@@ -1,0 +1,73 @@
+﻿@model PCMediaAutomation.Models.Home.Index
+@{
+    ViewBag.Title = "View";
+}
+
+<html>
+
+<head>
+    <meta http-equiv="cache-control" content="max-age=0" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+    <meta http-equiv="pragma" content="no-cache" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <link href="~/Scripts/Libraries/bootstrap-4.3.1-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Scripts/Libraries/typicons-2.0.9/typicons.min.css" rel="stylesheet" />
+    <link href="~/Scripts/Libraries/rangeslider.js-2.3.0/rangeslider.css" rel="stylesheet" />
+
+    <link href="~/Content/Views/Home/index.css" rel="stylesheet" />
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row media-buttons">
+            <div class="col">
+                <div>
+                    <i class="typcn typcn-media-play play"></i>
+                </div>
+            </div>
+            <div class="col">
+                <div>
+                    <i class="typcn typcn-media-pause pause"></i>
+                </div>
+            </div>
+            <div class="col">
+                <div>
+                    <i class="typcn typcn-media-stop stop"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <div class="volume">
+                    <div class="info">
+                        <span>@Model.Volume%</span>
+                    </div>
+                    <div>
+                        <input type="range" min="0" max="100" step="10" value="@Model.Volume" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col text-center">
+                <i class="typcn typcn-gift b-day"></i>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/Scripts/Libraries/jquery/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/Libraries/bootstrap-4.3.1-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Scripts/Libraries/fitty/fitty.min.js"></script>
+    <script src="~/Scripts/Libraries/rangeslider.js-2.3.0/rangeslider.min.js"></script>
+
+    <script src="~/Scripts/Views/Home/index.js"></script>
+</body>
+
+</html>

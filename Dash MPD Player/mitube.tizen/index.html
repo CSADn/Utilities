@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1920, height=1080, initial-scale=1.0">
+    <meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <title>MiTube TV</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/browse.css">
+    <link rel="stylesheet" href="css/player.css">
+    <style>
+        #debug-overlay {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 9999;
+            background: rgba(0,0,0,0.8);
+            color: #0f0;
+            font-family: monospace;
+            font-size: 14px;
+            padding: 10px;
+            border-radius: 4px;
+            max-width: 600px;
+            pointer-events: none;
+            display: none;
+        }
+        #debug-overlay .error { color: #f00; }
+        #debug-overlay .info { color: #ff0; }
+    </style>
+</head>
+<body tabindex="-1">
+    <div id="debug-overlay">JS: iniciando...</div>
+    <div id="app">
+        <div id="login-view" class="view active">
+            <div class="login-container">
+                <h1 class="login-title">MiTube TV</h1>
+                <form id="login-form">
+                    <input id="login-username" type="text" class="login-input" placeholder="Usuario" autocomplete="off">
+                    <input id="login-password" type="password" class="login-input" placeholder="Contraseña" autocomplete="off">
+                    <button id="login-btn" type="button" class="login-btn">Ingresar</button>
+                    <p id="login-toast" class="login-toast"></p>
+                </form>
+            </div>
+        </div>
+
+        <div id="browse-view" class="view">
+            <header class="toolbar" id="toolbar">
+                <span class="toolbar-title">MiTube TV</span>
+                <span class="toolbar-user" id="toolbar-user"></span>
+                <span class="toolbar-count" id="toolbar-count"></span>
+                <button id="toolbar-settings" class="toolbar-btn" tabindex="0">⚙</button>
+            </header>
+            <div id="category-container" class="category-container"></div>
+            <p id="loading-text" class="loading-text">Cargando canales...</p>
+            <p id="error-text" class="error-text"></p>
+        </div>
+
+        <div id="player-view" class="view">
+            <video id="video-element" class="video-element" autoplay playsinline></video>
+            <div id="player-overlay" class="player-overlay">
+                <div class="player-top-bar">
+                    <span class="player-channel-name" id="player-channel-name"></span>
+                    <span class="player-live-badge">EN VIVO</span>
+                </div>
+                <div class="player-bottom-bar" id="player-bottom-bar">
+                    <button id="btn-play" class="player-btn" tabindex="0">⏸</button>
+                    <span class="player-time" id="player-time">00:00 / 00:00</span>
+                    <button id="btn-back" class="player-btn player-back-btn" tabindex="0">← Volver</button>
+                </div>
+            </div>
+            <p id="player-error" class="player-error"></p>
+        </div>
+
+        <div id="settings-view" class="view settings-overlay">
+            <div class="settings-panel">
+                <h2 class="settings-title">Configuración</h2>
+                <div class="settings-row"><span class="settings-label">Servidor:</span><span class="settings-value" id="settings-server"></span></div>
+                <div class="settings-row"><span class="settings-label">Usuario:</span><span class="settings-value" id="settings-user"></span></div>
+                <button id="btn-logout" class="settings-logout-btn" tabindex="0">Cerrar sesión</button>
+                <button id="btn-settings-close" class="settings-close-btn" tabindex="0">← Volver</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            var dbg = document.getElementById('debug-overlay');
+            // Only used by bundle.js appendDebug() when overlay is toggled visible
+            // vía secuencia secreta 1-2-3-4-5 con foco en botón Ingresar
+        })();
+    </script>
+    <script src="dist/bundle.js?v=5"></script>
+    <script src="dist/player.bundle.js"></script>
+</body>
+</html>

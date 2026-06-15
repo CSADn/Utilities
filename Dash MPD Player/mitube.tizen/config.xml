@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:tizen="http://tizen.org/ns/widgets" version="1.0.0" viewmodes="maximized">
+    <tizen:application id="miTubeTV10.MiTube" package="miTubeTV10" required_version="3.0"/>
+    <tizen:profile name="tv"/>
+    <feature name="http://tizen.org/feature/screen.size.all"/>
+    <content src="index.html"/>
+    <icon src="assets/icons/icon.png"/>
+    <name>MiTube</name>
+    <description>MiTube TV</description>
+    <author>MiTube</author>
+    <tizen:privilege name="http://tizen.org/privilege/internet"/>
+    <tizen:privilege name="http://tizen.org/privilege/tv.inputdevice"/>
+    <access origin="*" subdomains="true"/>
+    <tizen:privilege name="http://tizen.org/privilege/network.get"/>
+    <tizen:setting screen-orientation="landscape" context-menu="enable" background-support="disable" hwkey-event="enable" web-inspector="enable"/>
+    <tizen:metadata key="http://samsung.com/tv/metadata/use.keypad.without.useraction" value="false"/>
+</widget>
