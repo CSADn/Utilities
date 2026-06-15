@@ -64,6 +64,8 @@ export class PlayerView {
       document.removeEventListener("keydown", this.keyHandler, true);
       this.keyHandler = null;
     }
+    this.video.pause();
+    this.player?.unload().catch(() => {});
     this.container.classList.remove("active");
   }
 

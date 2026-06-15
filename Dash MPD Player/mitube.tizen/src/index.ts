@@ -55,6 +55,7 @@ async function main(): Promise<void> {
   }
 
   function goToBrowse(restore?: boolean): void {
+    playerView.hide();
     browseView.show(restore);
     showView(VIEWS.browse);
     setTimeout(() => browseView.focus(), 200);

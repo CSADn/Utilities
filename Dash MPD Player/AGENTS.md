@@ -1612,6 +1612,7 @@ function xhrRequest<T>(method: string, path: string, body?: string): Promise<T> 
 | Flechas skip 2+ cards en Browse | Navegación errática en browse | `bindKeyboard()` agrega listener nuevo en cada `show()` | Track `keyboardHandler` ref, remove old listener en `hide()` y antes de `bindKeyboard()` |
 | Pantalla negra al segundo playback | Video no se reproduce la 2da vez | `PlayerSetup` destruido y recreado, `shakaPlayer.destroy()` async causa race condition | Lazy-init una vez, reusar via `async unload()` con `shakaPlayer.unload()`, nunca destroy/recreate |
 | Iconos no cargan por placeholder faltante | Card muestra icono roto, error loop | `assets/icons/placeholder.png` no existe físicamente | Crear archivo placeholder.png + guard `onerror` para evitar re-trigger |
+| Audio continúa al presionar Back | Al volver a BrowseView se sigue escuchando el canal | `PlayerView.hide()` no detenía el video; `goToBrowse()` en `index.ts` no llamaba `playerView.hide()` | Agregar `this.video.pause()` + `this.player?.unload()` en `PlayerView.hide()`. Llamar `playerView.hide()` en `goToBrowse()` antes de cambiar de vista. |
 
 ### Lecciones Aprendidas — Debugging en Tizen 5300
 
@@ -1668,3 +1669,78 @@ Start-Process -WindowStyle Hidden -FilePath powershell -ArgumentList "-Command d
 ```
 
 El backend escucha en `http://0.0.0.0:5241`, accesible desde el TV como `http://192.168.0.173:5241`. Login: `adn` / `123456La`.
+
+---
+
+## Fix: CDN Token Expiry (403 Invalid Token) en Tizen
+
+### Síntoma
+Canal Flow comienza reproduciéndose bien, pero luego de ~60 segundos la imagen se congela. Backend log muestra `Proxy upstream error 403` con `"Invalid token"`. Todos los requests posteriores fallan permanentemente.
+
+### Causa Raíz (Original)
+`PlayerSetup.loadDash()` obtenía el CDN token una sola vez. El token expira a los 60s (`exp - iat = 60`). Después de la expiración, la CDN devuelve 403 y Shaka no sabe renovarlo.
+
+### Fix 1: Error Handler — Index Erróneo en Shaka Data Array
+**Archivo:** `mitube.tizen/src/player/PlayerSetup.ts:34`
+
+```typescript
+// ❌ BUG: data[0] es la URL (string), data[1] es el HTTP status
+if (error?.code === 1002 && error?.data?.[0] === 403) { ... }
+
+// ✅
+if (error?.code === 1002 && error?.data?.[1] === 403) { ... }
+```
+
+En Shaka Player, `shaka.util.Error.data` para HTTP errors (code=1002) contiene:
+- `data[0]` = URL del request (string)
+- `data[1]` = HTTP status code (number)
+- `data[2]` = status text
+- `data[3]` = headers
+- `data[4]` = body
+
+El handler registrado se dispara ante errores de Shaka, invalida bearer token, pide uno nuevo, y recarga el manifest con `shakaPlayer.load()`.
+
+### Fix 2: RequestFilter — Reemplazar cdntoken Siempre, No Solo Cuando Falta
+**Archivo:** `mitube.tizen/src/player/PlayerSetup.ts:155-167`
+
+```typescript
+// ❌ BUG: si la URL ya tiene cdntoken= (como el MPD URL cargado inicialmente),
+//     nunca se actualiza al token nuevo. El MPD re-fetch siempre usa el viejo.
+if (this.cdnToken && !originalUrl.includes("cdntoken=")) { ... }
+
+// ✅: siempre usar this.cdnToken actual, reemplazando si ya existe
+if (this.cdnToken) {
+  if (originalUrl.includes("cdntoken=")) {
+    originalUrl = originalUrl.replace(/cdntoken=[^&]+/, `cdntoken=${this.cdnToken}`);
+  } else {
+    const sep = originalUrl.includes("?") ? "&" : "?";
+    originalUrl += `${sep}cdntoken=${this.cdnToken}`;
+  }
+}
+```
+
+**Por qué es necesario:** El MPD URL se pasa a `shakaPlayer.load()` con `cdntoken=OLD` incrustado. Shaka re-fetcha el MPD periódicamente (cada ~2s para live) usando la URL original. El requestFilter ve que ya tiene `cdntoken=` y salteaba — el MPD re-fetch siempre usaba el token expirado. Con el reemplazo, cada request usa el token actual (`this.cdnToken`), que el timer refresca cada 50s.
+
+### Arquitectura de Defensa (2 Capas)
+
+| Capa | Mecanismo | Intervalo | Propósito |
+|---|---|---|---|
+| **Proactiva** | `setInterval` en `startTokenRefreshTimer()` | Cada 50s (antes de expirar a los 60s) | Refresca `this.cdnToken`. El requestFilter usa el nuevo token automáticamente en todos los requests. |
+| **Reactiva** | Shaka error listener (code=1002, status=403) | Bajo demanda | Si algo falla (timer bloqueado, clock drift), invalida bearer, obtiene nuevo CDN token, recarga manifest con `shakaPlayer.load()`. |
+
+### Logs de Diagnóstico
+
+Para verificar el fix, buscar en `app-YYYY-MM-DD.log`:
+
+```
+# Token fresco funcionando
+Request finished ... cdntoken=... - 200 ... audio/mp4 ...
+
+# Primera señal de expiración
+WARN ... Proxy upstream error 403 for ... DSports_1.mpd?cdntoken=...: Invalid token
+
+# Con el fix: después del primer 403 debería aparecer un nuevo token
+Request finished ... cdntoken=<NUEVO_TOKEN> - 200 ... application/dash+xml
+```
+
+Si después del primer 403 NO hay requests 200 con un token distinto → el error handler no se está disparando (probablemente Bug 1).

@@ -13,6 +13,8 @@ export class PlayerSetup {
   private isFlow: boolean = false;
   private channelHeaders: Record<string, string> | null = null;
   private cdnToken: string | null = null;
+  private cdnTokenExpiresAt: number = 0;
+  private _tokenRefreshTimer: ReturnType<typeof setInterval> | null = null;
 
   constructor(videoElement: HTMLVideoElement) {
     this.video = videoElement;
@@ -27,6 +29,12 @@ export class PlayerSetup {
     if (shaka.Player.isBrowserSupported()) {
       this.shakaPlayer = new shaka.Player(this.video);
       this.registerShakaFilters();
+      this.shakaPlayer.addEventListener('error', (event: any) => {
+        const error = event.detail;
+        if (error?.code === 1002 && error?.data?.[1] === 403) {
+          this.handleTokenExpired();
+        }
+      });
     }
   }
 
@@ -39,6 +47,8 @@ export class PlayerSetup {
     this.channelHeaders = channel.headers || null;
     this.isFlow = TokenService.isFlowChannel(channel.headers);
     this.cdnToken = null;
+    this.cdnTokenExpiresAt = 0;
+    this.stopTokenRefreshTimer();
     this.destroyCurrent();
 
     const url = channel.url;
@@ -87,6 +97,8 @@ export class PlayerSetup {
         const bearer = await TokenService.getBearerToken();
         const cdnToken = await TokenService.requestCdnToken(url, bearer, this.channelHeaders);
         this.cdnToken = cdnToken;
+        this.cdnTokenExpiresAt = Date.now() + 55000;
+        this.startTokenRefreshTimer();
         const sep = url.includes("?") ? "&" : "?";
         manifestUrl = `${url}${sep}cdntoken=${cdnToken}`;
       }
@@ -136,13 +148,18 @@ export class PlayerSetup {
         let originalUrl = request.uris[0];
         if (originalUrl.startsWith("data:") || originalUrl.startsWith("blob:")) return;
 
-        // Append CDN token to ALL Flow requests so the backend proxy
+        // Append or replace CDN token on ALL Flow requests so the backend proxy
         // forwards it to the CDN upstream (otherwise CDN returns 403 "token required").
         // The manifest URL already has it from loadDash, but segments resolved
-        // from the MPD don't.
-        if (this.cdnToken && !originalUrl.includes("cdntoken=")) {
-          const sep = originalUrl.includes("?") ? "&" : "?";
-          originalUrl += `${sep}cdntoken=${this.cdnToken}`;
+        // from the MPD don't. Token must be refreshed before expiry (60s), so
+        // always use the current this.cdnToken.
+        if (this.cdnToken) {
+          if (originalUrl.includes("cdntoken=")) {
+            originalUrl = originalUrl.replace(/cdntoken=[^&]+/, `cdntoken=${this.cdnToken}`);
+          } else {
+            const sep = originalUrl.includes("?") ? "&" : "?";
+            originalUrl += `${sep}cdntoken=${this.cdnToken}`;
+          }
         }
 
         const proxyBase = CONFIG.serverUrl.replace(/\/+$/, "") + "/api/proxy/fetch";
@@ -166,6 +183,53 @@ export class PlayerSetup {
     });
   }
 
+  private async handleTokenExpired(): Promise<void> {
+    if (!this.currentChannel || !this.isFlow) return;
+    try {
+      TokenService.invalidateBearer();
+      const bearer = await TokenService.getBearerToken();
+      const cdnToken = await TokenService.requestCdnToken(
+        this.currentChannel.url, bearer,
+        this.channelHeaders || undefined
+      );
+      this.cdnToken = cdnToken;
+      this.cdnTokenExpiresAt = Date.now() + 55000;
+      const url = this.currentChannel.url;
+      const sep = url.includes("?") ? "&" : "?";
+      if (this.shakaPlayer) {
+        await this.shakaPlayer.load(`${url}${sep}cdntoken=${cdnToken}`);
+      }
+    } catch (e: any) {
+      this.emitError(`Error renovando token CDN: ${e.message || e}`);
+    }
+  }
+
+  private startTokenRefreshTimer(): void {
+    this.stopTokenRefreshTimer();
+    this._tokenRefreshTimer = setInterval(async () => {
+      if (!this.isFlow || !this.currentChannel) return;
+      try {
+        const bearer = await TokenService.getBearerToken();
+        const cdnToken = await TokenService.requestCdnToken(
+          this.currentChannel.url, bearer,
+          this.channelHeaders || undefined
+        );
+        this.cdnToken = cdnToken;
+        this.cdnTokenExpiresAt = Date.now() + 55000;
+        console.log("[Player] CDN token refreshed (timer)");
+      } catch (e: any) {
+        console.warn("[Player] CDN token refresh failed:", e);
+      }
+    }, 50000);
+  }
+
+  private stopTokenRefreshTimer(): void {
+    if (this._tokenRefreshTimer !== null) {
+      clearInterval(this._tokenRefreshTimer);
+      this._tokenRefreshTimer = null;
+    }
+  }
+
   private destroyCurrent(): void {
     if (this.hlsPlayer) {
       this.hlsPlayer.destroy();
@@ -176,8 +240,10 @@ export class PlayerSetup {
   /** Unload current manifest/stream and prepare for next channel.
    *  Unlike destroy() this keeps the Player instance alive for reuse. */
   async unload(): Promise<void> {
+    this.stopTokenRefreshTimer();
     this.destroyCurrent();
     this.cdnToken = null;
+    this.cdnTokenExpiresAt = 0;
     this.currentChannel = null;
     this.isFlow = false;
     this.channelHeaders = null;
