@@ -45,9 +45,10 @@ Dash MPD Player/
 │   └── Web/ player.html               ← Shaka + hls.js embebido
 │
 ├── mitube.service/                     ← Backend API (.NET 10)
-│   ├── Program.cs                      ← Startup con JWT, CORS, DI, Swagger
-│   ├── appsettings.json                ← JWT secret, connection string, channel JSON path
-│   ├── mitube.service.csproj
+│   ├── Program.cs                      ← Startup con JWT, CORS, DI, Swagger, NLog
+│   ├── appsettings.json                ← JWT secret, connection string, channel JSON path, NLog config
+│   ├── appsettings.Development.json    ← Override NLog rules para Microsoft.* en Development
+│   ├── mitube.service.csproj           ← NLog 5.3.4, NLog.Web.AspNetCore 5.3.14
 │   ├── Controllers/
 │   │   ├── AuthController.cs           ← POST /api/auth/login (solo login)
 │   │   └── ChannelsController.cs       ← GET /api/channels, PUT /api/channels/upload
@@ -176,6 +177,60 @@ Dash MPD Player/
 - Tabla única: `Users` (Id, Username UNIQUE, PasswordHash, DisplayName, CreatedAt, IsActive)
 - Auto-migrate en startup con `db.Database.EnsureCreated()`
 - Alta de usuarios manual vía SQL o herramienta externa (BCrypt hash)
+
+### NLog Logging (desde appsettings.json)
+
+**Stack:** `NLog` 5.3.4 + `NLog.Web.AspNetCore` 5.3.14. Toda la configuración vive en la sección `"NLog"` de `appsettings.json`. No existe `nlog.config`.
+
+**Bootstrap en `Program.cs`:**
+```csharp
+var nlogSection = builder.Configuration.GetSection("NLog");
+LogManager.Configuration = new NLogLoggingConfiguration(nlogSection);
+builder.Logging.ClearProviders();
+builder.Host.UseNLog();
+```
+Requiere `using NLog;`, `using NLog.Web;` y `using NLog.Extensions.Logging;`.
+
+**Targets configurados:**
+
+| Target | Tipo | fileName |
+|---|---|---|
+| `logconsole` | Console | stdout |
+| `logfile` | File | `${basedir}/Logs/app-${shortdate}.log` |
+| `errorfile` | File | `${basedir}/Logs/errors-${shortdate}.log` |
+
+- Archive automático a 10 MB, retención 30 archivos
+- `keepFileOpen: false` para asegurar flush inmediato
+- Layout: `${longdate}\|${level:uppercase=true}\|${logger}\|${message} ${exception:format=tostring}`
+
+**Rules (orden de precedencia):**
+
+| logger | minLevel | writeTo |
+|---|---|---|
+| `*` | Debug | logconsole |
+| `*` | Info | logfile |
+| `*` | Warn | errorfile |
+
+**appsettings.Development.json:** Las secciones `"NLog"` en `appsettings.json` y `appsettings.Development.json` **no se fusionan** — la de Development reemplaza completamente la de Production. Por eso `appsettings.Development.json` debe duplicar las rules base (`*`) más los overrides para Microsoft.*. Sin la duplicación, solo se aplicarían las rules de Development (Microsoft.* a Warn), perdiendo las rules globales (`*`) y los targets file/errorfile.
+
+```json
+{
+  "NLog": {
+    "rules": [
+      { "logger": "*", "minLevel": "Debug", "writeTo": "logconsole" },
+      { "logger": "*", "minLevel": "Info",  "writeTo": "logfile" },
+      { "logger": "*", "minLevel": "Warn",  "writeTo": "errorfile" },
+      { "logger": "Microsoft.*", "minLevel": "Warn", "writeTo": "logfile" },
+      { "logger": "Microsoft.*", "minLevel": "Warn", "writeTo": "errorfile" },
+      { "logger": "Microsoft.AspNetCore.*", "minLevel": "Warn", "writeTo": "logconsole" }
+    ]
+  }
+}
+```
+
+**${basedir} resuelve a `AppDomain.CurrentDomain.BaseDirectory`:** En desarrollo con `dotnet run` apunta a `bin/Debug/net10.0/`, por lo que los logs aparecen en `bin/Debug/net10.0/Logs/`. En producción con `dotnet <dll>` apunta al directorio publish que es la raíz de la app. Comportamiento estándar de NLog en ASP.NET Core.
+
+**Lección aprendida:** `appsettings.Development.json` **reemplaza secciones completas** (no mergea). Si tiene una sección `"NLog"`, las rules de `appsettings.json` se pierden por completo. Siempre duplicar las rules base en `appsettings.Development.json`.
 
 ---
 

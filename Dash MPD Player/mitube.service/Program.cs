@@ -5,8 +5,18 @@ using Microsoft.IdentityModel.Tokens;
 using mitube.service.Data;
 using mitube.service.Services;
 using mitube.service.Services.Repositories;
+using NLog;
+using NLog.Web;
+using NLog.Extensions.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// NLog: cargar configuracion desde appsettings.json seccion "NLog"
+var nlogSection = builder.Configuration.GetSection("NLog");
+LogManager.Configuration = new NLogLoggingConfiguration(nlogSection);
+
+builder.Logging.ClearProviders();
+builder.Host.UseNLog();
 
 // JWT settings
 var jwtSection = builder.Configuration.GetSection("Jwt");
