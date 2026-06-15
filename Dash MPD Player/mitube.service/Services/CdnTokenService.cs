@@ -88,7 +88,17 @@ public class CdnTokenService
         _logger.LogInformation("RequestCdnTokenAsync: Header User-Agent: {User-Agent}", request.Headers.UserAgent);
 
         var response = await _client.SendAsync(request);
-        response.EnsureSuccessStatusCode();
+
+        try
+        {
+            response.EnsureSuccessStatusCode();
+        }
+        catch (Exception)
+        {
+            var responseContent = await response.Content.ReadAsStringAsync();
+            _logger.LogError("Failed to fetch CDN token. Status: {StatusCode}, Response: {ResponseContent}", response.StatusCode, responseContent);
+            throw;
+        }
 
         var json = await response.Content.ReadAsStringAsync();
         using var doc = JsonDocument.Parse(json);
