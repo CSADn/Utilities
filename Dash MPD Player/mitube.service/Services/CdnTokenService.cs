@@ -78,6 +78,14 @@ public class CdnTokenService
             }
         }
 
+        _logger.LogInformation("RequestCdnTokenAsync: Requesting CDN token for {MpdUrl}", mpdUrl);
+        _logger.LogInformation("RequestCdnTokenAsync: Bearer token: {BearerToken}", bearerToken);
+        _logger.LogInformation("RequestCdnTokenAsync: Token URL: {TokenUrl}", tokenUrl);
+        _logger.LogInformation("RequestCdnTokenAsync: User-Agent: {UserAgent}", UserAgent);
+        _logger.LogInformation("RequestCdnTokenAsync: Using headers: {Headers}", headers != null
+            ? string.Join(", ", headers.Select(kv => $"{kv.Key}: {kv.Value}"))
+            : "None");
+
         var response = await _client.SendAsync(request);
         response.EnsureSuccessStatusCode();
 
