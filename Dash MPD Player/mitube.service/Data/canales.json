@@ -2569,18 +2569,6 @@
         "headersUrl": null
       },
       {
-        "name": "Disney",
-        "url": "https://playerservices.streamtheworld.com/api/livestream-redirect/DISNEY_ARG_BA_ADP.aac",
-        "type": "HLS",
-        "drm_license_uri": "",
-        "icono": "https://myradioenvivo.ar/public/uploads/radio_img/radio-disney/fb_cover.jpg",
-        "globalIndex": 0,
-        "headers": null,
-        "headers2": null,
-        "headersM3u8": null,
-        "headersUrl": null
-      },
-      {
         "name": "DSports Radio",
         "url": "http://playerservices.streamtheworld.com/api/livestream-redirect/DSPORTSRADIO",
         "type": "HLS",
