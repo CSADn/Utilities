@@ -65,6 +65,8 @@ public class CdnTokenService
         using var request = new HttpRequestMessage(HttpMethod.Get, tokenUrl);
         request.Headers.TryAddWithoutValidation("Authorization", $"Bearer {bearerToken}");
         request.Headers.TryAddWithoutValidation("User-Agent", UserAgent);
+        request.Headers.TryAddWithoutValidation("Origin", "https://portal.app.flow.com.py");
+        request.Headers.TryAddWithoutValidation("Referer", "https://portal.app.flow.com.py");
 
         if (headers != null)
         {
