@@ -27,7 +27,7 @@ jobs:
         run: dotnet restore "./Dash MPD Player/mitube.service/mitube.service.csproj" --runtime win-x86
 
       - name: Build solution
-        run: dotnet build "./Dash MPD Player/mitube.service/mitube.service.csproj" --configuration Release --no-restore
+        run: dotnet build "./Dash MPD Player/mitube.service/mitube.service.csproj" --configuration Release --no-restore --runtime win-x86
 
       - name: Run tests
         run: dotnet test "./Dash MPD Player/mitube.service/mitube.service.csproj" --configuration Release --no-build
