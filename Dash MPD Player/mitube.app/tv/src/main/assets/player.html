@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#000;overflow:hidden;font-family:'Segoe UI',sans-serif}
+#video-player{width:100vw;height:100vh;object-fit:contain;background:#000}
+video::-webkit-media-controls{display:none!important}
+video::-webkit-media-controls-overlay-play-button{display:none!important}
+video::-webkit-media-controls-start-playback-button{display:none!important}
+#overlay{position:absolute;top:0;left:0;right:0;bottom:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
+#loading{color:#fff;font-size:16px;opacity:0;transition:opacity .3s;background:rgba(0,0,0,.7);padding:12px 24px;border-radius:8px}
+#loading.active{opacity:1}
+#error-display{position:absolute;bottom:0;left:0;right:0;background:rgba(220,30,30,.9);color:#fff;padding:12px 16px;font-size:13px;display:none;z-index:10}
+#error-display.show{display:block}
+#controls{position:absolute;bottom:0;left:0;right:0;height:48px;background:linear-gradient(transparent,rgba(0,0,0,.8));display:flex;align-items:center;padding:0 16px;opacity:0;transition:opacity .3s;z-index:5}
+#controls .left{display:flex;align-items:center;gap:8px}
+#controls .right{margin-left:auto;display:flex;align-items:center}
+#channel-name{position:absolute;left:50%;transform:translateX(-50%);color:#fff;font-size:13px;opacity:.8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:40%;text-align:center}
+#controls.show{opacity:1}
+#controls.visible{opacity:1}
+#controls:hover{opacity:1}
+#controls button{background:rgba(255,255,255,.2);border:none;color:#fff;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:18px;margin-right:8px;display:flex;align-items:center;justify-content:center}
+#btn-fullscreen{font-size:16px}
+#controls button:hover{background:rgba(255,255,255,.4)}
+</style>
+</head>
+<body>
+<video id="video-player" autoplay muted poster="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"></video>
+<div id="overlay"><div id="loading">Cargando canal...</div></div>
+<div id="error-display"></div>
+<div id="controls">
+  <div class="left">
+    <button id="btn-play" onclick="togglePlay()">&#10074;&#10074;</button>
+    <button id="btn-mute" onclick="toggleMute()">&#128263;</button>
+  </div>
+  <span id="channel-name"></span>
+  <div class="right">
+    <button id="btn-fullscreen" onclick="toggleFullscreen()">&#9974;</button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/shaka-player@4/dist/shaka-player.compiled.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+<script>
+let player = null;
+let hls = null;
+let currentChannel = null;
+let controlsVisible = false;
+let controlsTimer = null;
+let loadTimeout = null;
+let diagInterval = null;
+
+function postToAndroid(msg) {
+  try {
+    if (window.Android && window.Android.postMessage) {
+      window.Android.postMessage(JSON.stringify(msg));
+    }
+  } catch(e) {}
+}
+
+function init() {
+  shaka.polyfill.installAll();
+  console.log('Shaka polyfill installed');
+
+  var mseSupport = typeof MediaSource !== 'undefined' || typeof WebKitMediaSource !== 'undefined';
+  var emeSupport = typeof navigator.requestMediaKeySystemAccess !== 'undefined';
+  console.log('MSE support: ' + mseSupport + ', EME support: ' + emeSupport);
+
+  if (!shaka.Player.isBrowserSupported()) {
+    console.error('Shaka browser not supported');
+    showError('Este navegador no soporta Shaka Player');
+    return;
+  }
+  console.log('Shaka browser supported');
+
+  var video = document.getElementById('video-player');
+  player = new shaka.Player(video);
+  console.log('Shaka Player created');
+  player.addEventListener('error', onPlayerError);
+  player.getNetworkingEngine().registerRequestFilter(onRequestFilter);
+  player.getNetworkingEngine().registerResponseFilter(function(type, response) {
+    if (type !== shaka.net.NetworkingEngine.RequestType.LICENSE) {
+      var size = response.data ? response.data.byteLength : 0;
+      var ct = response.headers['content-type'] || '?';
+      console.log('Response: type=' + type + ', uri=' + (response.uri || '?') + ', size=' + size + ', ct=' + ct);
+    }
+    if (type === shaka.net.NetworkingEngine.RequestType.MANIFEST && response.data) {
+      var text = new TextDecoder().decode(response.data);
+      console.log('Manifest content (' + text.length + ' chars): ' + text.substring(0, 400).replace(/\n/g, '\\n'));
+    }
+  });
+  video.addEventListener('click', toggleControls);
+  video.addEventListener('mouseenter', showControls);
+  video.addEventListener('mousemove', showControls);
+  video.addEventListener('mouseleave', function() { if (!controlsVisible) hideControls(); });
+  showControls();
+  document.getElementById('loading').classList.remove('active');
+  document.title = 'IPTV Player';
+
+  postToAndroid({ action: 'init', mse: mseSupport, eme: emeSupport });
+}
+
+function onRequestFilter(type, request) {
+  const uri = request.uris[0];
+
+  if (currentChannel?.headers && type !== shaka.net.NetworkingEngine.RequestType.MANIFEST) {
+    for (const [key, value] of Object.entries(currentChannel.headers)) {
+      request.headers[key] = value;
+    }
+  }
+
+  if (type === shaka.net.NetworkingEngine.RequestType.MANIFEST) {
+    if (uri === currentChannel?.url) {
+      request.uris[0] = currentChannel?.manifestUrl || uri;
+    }
+    return;
+  }
+
+  if (type === shaka.net.NetworkingEngine.RequestType.LICENSE) {
+    const licenseUrl = currentChannel?.drmLicenseUri || uri;
+    request.uris[0] = currentChannel?.licenseProxyUrl || licenseUrl;
+    return;
+  }
+}
+
+function destroyHls() {
+  if (hls) {
+    hls.destroy();
+    hls = null;
+  }
+}
+
+function loadChannel(channel) {
+  if (diagInterval) { clearInterval(diagInterval); diagInterval = null; }
+  if (loadTimeout) clearTimeout(loadTimeout);
+  destroyHls();
+  currentChannel = channel;
+  document.getElementById('channel-name').textContent = channel.name || '';
+  document.title = channel.name || 'IPTV Player';
+  showLoading(true);
+  var video = document.getElementById('video-player');
+
+  if (channel.type === 'HLS') {
+    video.src = '';
+    console.log('HLS loading: ' + channel.url);
+
+    if (typeof Hls !== 'undefined' && Hls.isSupported()) {
+      hls = new Hls({ enableWorker: false });
+      hls.loadSource(channel.url);
+      hls.attachMedia(video);
+      hls.on(Hls.Events.MANIFEST_PARSED, function() {
+        console.log('HLS manifest parsed');
+        showLoading(false);
+        video.play().then(function() {
+          console.log('HLS playing');
+          postToAndroid({ action: 'loaded', name: channel.name });
+          diagInterval = setInterval(function() {
+            var buf = video.buffered;
+            var bufLen = buf.length;
+            var bufEnd = bufLen > 0 ? buf.end(bufLen - 1) : 0;
+            console.log('DIAG: readyState=' + video.readyState + ', paused=' + video.paused + ', currentTime=' + video.currentTime.toFixed(1) + ', bufEnd=' + bufEnd.toFixed(1));
+          }, 3000);
+        }).catch(function(e) {
+          console.error('HLS play error:', e);
+          showError('Error al reproducir HLS');
+        });
+      });
+      hls.on(Hls.Events.ERROR, function(event, data) {
+        console.error('HLS error:', data.type, data.details, data.fatal);
+        if (data.fatal) {
+          showError('Error HLS: ' + (data.type || 'desconocido'));
+          postToAndroid({ action: 'error', message: 'HLS fatal: ' + data.type + ' ' + data.details });
+        }
+      });
+    } else {
+      showError('HLS no soportado en este navegador');
+    }
+    return;
+  }
+
+  if (channel.type === 'CLEARKEY' && channel.keyId && channel.key) {
+    const keyId = channel.keyId.replace(/-/g, '');
+    const key = channel.key.replace(/-/g, '');
+    player.configure({
+      drm: {
+        clearKeys: {
+          [keyId]: key
+        }
+      }
+    });
+  }
+
+  if (channel.type === 'WIDEVINE' && channel.drmLicenseUri) {
+    player.configure({
+      drm: {
+        servers: {
+          'com.widevine.alpha': channel.drmLicenseUri
+        }
+      }
+    });
+  }
+
+  loadTimeout = setTimeout(function() {
+    console.error('player.load TIMEOUT after 15s');
+    showLoading(false);
+    showError('Timeout: el MPD no se pudo cargar en 15s');
+    postToAndroid({ action: 'timeout', url: channel.url });
+  }, 15000);
+
+  console.log('player.load called, url: ' + (channel.url || channel.manifestUrl));
+  player.load(channel.manifestUrl || channel.url).then(function() {
+    console.log('player.load resolved');
+    if (loadTimeout) clearTimeout(loadTimeout);
+    showLoading(false);
+    document.getElementById('btn-play').innerHTML = '&#10074;&#10074;';
+    if (video.muted) {
+      video.muted = false;
+      document.getElementById('btn-mute').innerHTML = '&#128266;';
+    }
+    postToAndroid({ action: 'loaded', name: channel.name });
+    if (diagInterval) clearInterval(diagInterval);
+    diagInterval = setInterval(function() {
+      var stats = player ? player.getStats() : null;
+      var buf = video.buffered;
+      var bufLen = buf.length;
+      var bufEnd = bufLen > 0 ? buf.end(bufLen - 1) : 0;
+      console.log('DIAG: readyState=' + video.readyState + ', paused=' + video.paused + ', currentTime=' + video.currentTime.toFixed(1) + ', bufEnd=' + bufEnd.toFixed(1) + ', bufLen=' + bufLen + ', dropped=' + (stats ? stats.droppedFrames : '?') + ', stalled=' + (stats ? stats.stallDetected : '?'));
+    }, 3000);
+  }).catch(function(err) {
+    if (diagInterval) { clearInterval(diagInterval); diagInterval = null; }
+    console.error('player.load error:', err);
+    if (loadTimeout) clearTimeout(loadTimeout);
+    showLoading(false);
+    var loadMsg = err.code === 6007
+      ? 'Servidor de licencias no accesible. El canal no puede reproducirse.'
+      : 'Error al cargar: ' + (err.message || err);
+    showError(loadMsg);
+    postToAndroid({ action: 'loadError', message: err.message, code: err.code });
+  });
+}
+
+function togglePlay() {
+  const video = document.getElementById('video-player');
+  if (video.paused) {
+    video.play();
+    document.getElementById('btn-play').innerHTML = '&#10074;&#10074;';
+  } else {
+    video.pause();
+    document.getElementById('btn-play').innerHTML = '&#9654;';
+  }
+}
+
+function toggleMute() {
+  const video = document.getElementById('video-player');
+  video.muted = !video.muted;
+  document.getElementById('btn-mute').innerHTML = video.muted ? '&#128263;' : '&#128266;';
+}
+
+function toggleControls() {
+  controlsVisible = !controlsVisible;
+  document.getElementById('controls').classList.toggle('visible', controlsVisible);
+  if (controlsVisible) {
+    clearTimeout(controlsTimer);
+    controlsTimer = setTimeout(() => {
+      controlsVisible = false;
+      document.getElementById('controls').classList.remove('visible');
+    }, 5000);
+  }
+}
+
+function showControls() {
+  document.getElementById('controls').classList.add('show');
+  clearTimeout(controlsTimer);
+  controlsTimer = setTimeout(() => {
+    if (!controlsVisible) document.getElementById('controls').classList.remove('show');
+  }, 3000);
+}
+
+function hideControls() {
+  if (!controlsVisible) document.getElementById('controls').classList.remove('show');
+}
+
+function toggleFullscreen() {
+  var el = document.getElementById('video-player');
+  if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+    if (el.requestFullscreen) {
+      el.requestFullscreen();
+    } else if (el.webkitRequestFullscreen) {
+      el.webkitRequestFullscreen();
+    }
+  } else {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+    }
+  }
+}
+
+document.addEventListener('fullscreenchange', function() {
+  document.getElementById('btn-fullscreen').innerHTML = document.fullscreenElement ? '&#10530;' : '&#9974;';
+});
+document.addEventListener('webkitfullscreenchange', function() {
+  document.getElementById('btn-fullscreen').innerHTML = document.webkitFullscreenElement ? '&#10530;' : '&#9974;';
+});
+
+function showLoading(active) {
+  document.getElementById('loading').classList.toggle('active', active);
+}
+
+function showError(msg) {
+  const el = document.getElementById('error-display');
+  el.textContent = typeof msg === 'string' ? msg : (msg.detail?.message || 'Error desconocido');
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 8000);
+}
+
+function onPlayerError(event) {
+  const err = event.detail;
+  var dataStr = '';
+  if (err.data && err.data.length > 0) {
+    dataStr = err.data.map(function(d) { return typeof d === 'string' ? d : JSON.stringify(d); }).join(', ');
+  }
+  console.error('Shaka error: code=' + err.code + ', cat=' + err.category + ', sev=' + err.severity + ', data=[' + dataStr + ']');
+  var msg = 'Error: [' + err.code + '] ' + (err.message || 'desconocido');
+  if (err.code === 6007) {
+    msg = 'Servidor de licencias no accesible. El canal no puede reproducirse.';
+  } else if (err.severity === 2) {
+    msg = 'Error recuperable [' + err.code + ']: ' + (err.data ? dataStr : err.message);
+  }
+  showError(msg);
+  postToAndroid({ action: 'error', code: err.code, category: err.category, data: dataStr, message: err.message });
+}
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

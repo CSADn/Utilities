@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.MiTube" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">#005a9e</item>
+        <item name="colorPrimaryDark">#003d6b</item>
+        <item name="colorAccent">#005a9e</item>
+        <item name="android:windowBackground">#1c1c1c</item>
+    </style>
+
+    <style name="Theme.MiTube.Translucent" parent="Theme.MiTube">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
+</resources>

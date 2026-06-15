@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "RM3": {
+      "commandName": "Project",
+      "commandLineArgs": "light"
+    }
+  }
+}

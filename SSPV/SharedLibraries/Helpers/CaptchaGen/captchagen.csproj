@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{961256BC-07BF-4117-A2EC-5BF533C6D909}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CaptchaGen</RootNamespace>
+    <AssemblyName>CaptchaGen</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DebugType>pdbonly</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DebugType>pdbonly</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Collections.Immutable, Version=1.2.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Collections.Immutable.1.5.0\lib\portable-net45+win8+wp8+wpa81\System.Collections.Immutable.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Captcha.cs" />
+    <Compile Include="CaptchaData.cs" />
+    <Compile Include="CryptoHelper.cs" />
+    <Compile Include="Imagenes.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Imagenes\airplane.png" />
+    <EmbeddedResource Include="Imagenes\airplane2x.png" />
+    <EmbeddedResource Include="Imagenes\balloons.png" />
+    <EmbeddedResource Include="Imagenes\balloons2x.png" />
+    <EmbeddedResource Include="Imagenes\camera.png" />
+    <EmbeddedResource Include="Imagenes\camera2x.png" />
+    <EmbeddedResource Include="Imagenes\car.png" />
+    <EmbeddedResource Include="Imagenes\car2x.png" />
+    <EmbeddedResource Include="Imagenes\cat.png" />
+    <EmbeddedResource Include="Imagenes\cat2x.png" />
+    <EmbeddedResource Include="Imagenes\chair.png" />
+    <EmbeddedResource Include="Imagenes\chair2x.png" />
+    <EmbeddedResource Include="Imagenes\clip.png" />
+    <EmbeddedResource Include="Imagenes\clip2x.png" />
+    <EmbeddedResource Include="Imagenes\clock.png" />
+    <EmbeddedResource Include="Imagenes\clock2x.png" />
+    <EmbeddedResource Include="Imagenes\cloud.png" />
+    <EmbeddedResource Include="Imagenes\cloud2x.png" />
+    <EmbeddedResource Include="Imagenes\computer.png" />
+    <EmbeddedResource Include="Imagenes\computer2x.png" />
+    <EmbeddedResource Include="Imagenes\envelope.png" />
+    <EmbeddedResource Include="Imagenes\envelope2x.png" />
+    <EmbeddedResource Include="Imagenes\eye.png" />
+    <EmbeddedResource Include="Imagenes\eye2x.png" />
+    <EmbeddedResource Include="Imagenes\flag.png" />
+    <EmbeddedResource Include="Imagenes\flag2x.png" />
+    <EmbeddedResource Include="Imagenes\folder.png" />
+    <EmbeddedResource Include="Imagenes\folder2x.png" />
+    <EmbeddedResource Include="Imagenes\foot.png" />
+    <EmbeddedResource Include="Imagenes\foot2x.png" />
+    <EmbeddedResource Include="Imagenes\graph.png" />
+    <EmbeddedResource Include="Imagenes\graph2x.png" />
+    <EmbeddedResource Include="Imagenes\house.png" />
+    <EmbeddedResource Include="Imagenes\house2x.png" />
+    <EmbeddedResource Include="Imagenes\key.png" />
+    <EmbeddedResource Include="Imagenes\key2x.png" />
+    <EmbeddedResource Include="Imagenes\leaf.png" />
+    <EmbeddedResource Include="Imagenes\leaf2x.png" />
+    <EmbeddedResource Include="Imagenes\light-bulb.png" />
+    <EmbeddedResource Include="Imagenes\light-bulb2x.png" />
+    <EmbeddedResource Include="Imagenes\lock.png" />
+    <EmbeddedResource Include="Imagenes\lock2x.png" />
+    <EmbeddedResource Include="Imagenes\magnifying-glass.png" />
+    <EmbeddedResource Include="Imagenes\magnifying-glass2x.png" />
+    <EmbeddedResource Include="Imagenes\man.png" />
+    <EmbeddedResource Include="Imagenes\man2x.png" />
+    <EmbeddedResource Include="Imagenes\music-note.png" />
+    <EmbeddedResource Include="Imagenes\music-note2x.png" />
+    <EmbeddedResource Include="Imagenes\pants.png" />
+    <EmbeddedResource Include="Imagenes\pants2x.png" />
+    <EmbeddedResource Include="Imagenes\pencil.png" />
+    <EmbeddedResource Include="Imagenes\pencil2x.png" />
+    <EmbeddedResource Include="Imagenes\printer.png" />
+    <EmbeddedResource Include="Imagenes\printer2x.png" />
+    <EmbeddedResource Include="Imagenes\robot.png" />
+    <EmbeddedResource Include="Imagenes\robot2x.png" />
+    <EmbeddedResource Include="Imagenes\scissors.png" />
+    <EmbeddedResource Include="Imagenes\scissors2x.png" />
+    <EmbeddedResource Include="Imagenes\sunglasses.png" />
+    <EmbeddedResource Include="Imagenes\sunglasses2x.png" />
+    <EmbeddedResource Include="Imagenes\t-shirt.png" />
+    <EmbeddedResource Include="Imagenes\t-shirt2x.png" />
+    <EmbeddedResource Include="Imagenes\tag.png" />
+    <EmbeddedResource Include="Imagenes\tag2x.png" />
+    <EmbeddedResource Include="Imagenes\tree.png" />
+    <EmbeddedResource Include="Imagenes\tree2x.png" />
+    <EmbeddedResource Include="Imagenes\truck.png" />
+    <EmbeddedResource Include="Imagenes\truck2x.png" />
+    <EmbeddedResource Include="Imagenes\umbrella.png" />
+    <EmbeddedResource Include="Imagenes\umbrella2x.png" />
+    <EmbeddedResource Include="Imagenes\woman.png" />
+    <EmbeddedResource Include="Imagenes\woman2x.png" />
+    <EmbeddedResource Include="Imagenes\world.png" />
+    <EmbeddedResource Include="Imagenes\world2x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

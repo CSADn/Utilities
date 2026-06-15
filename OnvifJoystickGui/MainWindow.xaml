@@ -1,0 +1,233 @@
+<Window x:Class="OnvifJoystickGui.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vlc="clr-namespace:LibVLCSharp.WPF;assembly=LibVLCSharp.WPF"
+        mc:Ignorable="d"
+        Title="Control PTZ ONVIF con Video" Height="460" Width="630"
+        WindowStyle="None"
+        ResizeMode="CanResizeWithGrip"
+        AllowsTransparency="True"
+        Background="Transparent"
+        Padding="0"
+        Topmost="True"
+        Icon="/Resources/cctv-camera.ico">
+    <Window.Resources>
+        <Style x:Key="PTZButtonStyle" TargetType="Button">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Background" Value="#2196F3"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="8"
+                                Padding="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#1976D2"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Background" Value="#BDBDBD"/>
+                                <Setter Property="Foreground" Value="#757575"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ZoomButtonStyle" TargetType="Button">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Background" Value="#4CAF50"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="8"
+                                Padding="12">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#388E3C"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Background" Value="#BDBDBD"/>
+                                <Setter Property="Foreground" Value="#757575"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Controles PTZ -->
+        <Border x:Name="PTZControls" Grid.Row="0" Padding="5" Background="#FF2E2E2E">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Panel de control PTZ -->
+                <Border Grid.Column="0">
+                    <StackPanel Orientation="Horizontal">
+
+                        <!-- Botón Arriba (W) -->
+                        <Button x:Name="btnUp" 
+                            Content="↑ (W)"
+                            Style="{StaticResource PTZButtonStyle}"
+                            PreviewMouseDown="BtnUp_MouseDown"
+                            PreviewMouseUp="Btn_MouseUp"
+                            MouseLeave="Btn_MouseUp"
+                            IsEnabled="False"
+                            Margin="8"/>
+
+                        <!-- Botón Izquierda (A) -->
+                        <Button x:Name="btnLeft" 
+                            Content="← (A)"
+                            Style="{StaticResource PTZButtonStyle}"
+                            PreviewMouseDown="BtnLeft_MouseDown"
+                            PreviewMouseUp="Btn_MouseUp"
+                            MouseLeave="Btn_MouseUp"
+                            IsEnabled="False"
+                            Margin="8"/>
+
+                        <!-- Centro (indicador) -->
+                        <Border>
+                            <TextBlock Text="PTZ" 
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                FontSize="16"
+                                FontWeight="Bold"
+                                Foreground="#757575"
+                                TextAlignment="Center"/>
+                        </Border>
+
+                        <!-- Botón Derecha (D) -->
+                        <Button Grid.Row="1" Grid.Column="2" 
+                            x:Name="btnRight" 
+                            Content="→ (D)"
+                            Style="{StaticResource PTZButtonStyle}"
+                            PreviewMouseDown="BtnRight_MouseDown"
+                            PreviewMouseUp="Btn_MouseUp"
+                            MouseLeave="Btn_MouseUp"
+                            IsEnabled="False"
+                            Margin="8"/>
+
+                        <!-- Botón Abajo (S) -->
+                        <Button Grid.Row="2" Grid.Column="1" 
+                            x:Name="btnDown" 
+                            Content="↓ (S)"
+                            Style="{StaticResource PTZButtonStyle}"
+                            PreviewMouseDown="BtnDown_MouseDown"
+                            PreviewMouseUp="Btn_MouseUp"
+                            MouseLeave="Btn_MouseUp"
+                            IsEnabled="False"
+                            Margin="8"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Estado Video Stream -->
+                <TextBlock Grid.Column="1" 
+                            x:Name="txtStreamStatus" 
+                            Text="Video Stream - Desconectado" 
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            FontWeight="Bold"
+                            Foreground="#757575"/>
+
+                <!-- Boton Conectar -->
+                <Border Grid.Column="2" Padding="8">
+                    <Button  x:Name="btnConnect" Content="Conectar" Click="BtnConnect_Click" 
+                            Background="#4CAF50" Foreground="White" Padding="15,8" FontWeight="Bold" Cursor="Hand">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border Background="{TemplateBinding Background}" CornerRadius="5" Padding="{TemplateBinding Padding}">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                </Border>
+            </Grid>
+        </Border>
+
+        <!-- Visor de video -->
+        <Border Grid.Row="1" Background="Black">
+            <Grid>
+                <!-- Control de video VLC -->
+                <vlc:VideoView x:Name="videoView" Visibility="Collapsed">
+                    <Border Background="#02FFFFFF" MouseLeftButtonDown="VideoOverlay_MouseLeftButtonDown">
+                    </Border>
+                </vlc:VideoView>
+
+                <!-- Overlay cuando no hay video -->
+                <Border x:Name="overlayNoVideo" 
+                        Background="#CC000000"
+                        Visibility="Visible"
+                        MouseLeftButtonDown="VideoOverlay_MouseLeftButtonDown">
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock Text="📹" 
+                                    FontSize="72" 
+                                    HorizontalAlignment="Center"
+                                    Foreground="White"
+                                    Margin="0,0,0,20"/>
+                        <TextBlock Text="Sin Video" 
+                                    FontSize="24" 
+                                    FontWeight="Bold"
+                                    HorizontalAlignment="Center"
+                                    Foreground="White"/>
+                        <TextBlock Text="Conecte la cámara e inicie el stream" 
+                                    FontSize="14" 
+                                    HorizontalAlignment="Center"
+                                    Foreground="#B0B0B0"
+                                    Margin="0,10,0,0"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Border>
+
+        <!-- Panel de log -->
+        <Border x:Name="OutputLogWindow" Grid.Row="2" Background="#263238" Padding="15">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="40">
+                <TextBlock x:Name="txtLog" 
+                            Text="Registro de eventos..."
+                            Foreground="#B0BEC5"
+                            FontFamily="Consolas"
+                            FontSize="11"
+                            TextWrapping="Wrap"/>
+            </ScrollViewer>
+        </Border>
+    </Grid>
+</Window>

@@ -1,0 +1,15 @@
+﻿<Application x:Class="DITool.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:DITool"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <!-- https://stackoverflow.com/a/39912794/1812392 -->
+        <FontFamily x:Key="PoppinsRegular">./Fonts/Poppins-Regular.ttf#Poppins Regular</FontFamily>
+        <FontFamily x:Key="PoppinsThin">./Fonts/Poppins-Thin.ttf#Poppins Thin</FontFamily>
+        <FontFamily x:Key="PoppinsMedium">./Fonts/Poppins-Medium.ttf#Poppins Medium</FontFamily>
+        <FontFamily x:Key="PoppinsSemiBold">./Fonts/Poppins-SemiBold.ttf#Poppins SemiBold</FontFamily>
+        <FontFamily x:Key="PoppinsBold">./Fonts/Poppins-Bold.ttf#Poppins Bold</FontFamily>
+        <ImageSource x:Key="DisneyLogo">./Images/Disney Infinity (White).png</ImageSource>
+    </Application.Resources>
+</Application>

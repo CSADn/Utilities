@@ -1,0 +1,18 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace DatabaseModel.Objects
+{
+    public class EntityPrimaryKey
+    {
+        public string Name { get; set; }
+        public object Value { get; set; }
+
+        public EntityPrimaryKey()
+        {
+            //
+        }
+    }
+}

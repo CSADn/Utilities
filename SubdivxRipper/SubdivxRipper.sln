@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.489
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SubdivxRipper", "SubdivxRipper\SubdivxRipper.csproj", "{E32A972F-3A69-4C8C-8F67-8E2CAC61B5C6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug (-download)|Any CPU = Debug (-download)|Any CPU
+		Debug (-fix)|Any CPU = Debug (-fix)|Any CPU
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E32A972F-3A69-4C8C-8F67-8E2CAC61B5C6}.Debug (-download)|Any CPU.ActiveCfg = Debug (-download)|Any CPU
+		{E32A972F-3A69-4C8C-8F67-8E2CAC61B5C6}.Debug (-download)|Any CPU.Build.0 = Debug (-download)|Any CPU
+		{E32A972F-3A69-4C8C-8F67-8E2CAC61B5C6}.Debug (-fix)|Any CPU.ActiveCfg = Debug (-fix)|Any CPU
+		{E32A972F-3A69-4C8C-8F67-8E2CAC61B5C6}.Debug (-fix)|Any CPU.Build.0 = Debug (-fix)|Any CPU
+		{E32A972F-3A69-4C8C-8F67-8E2CAC61B5C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E32A972F-3A69-4C8C-8F67-8E2CAC61B5C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E32A972F-3A69-4C8C-8F67-8E2CAC61B5C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E32A972F-3A69-4C8C-8F67-8E2CAC61B5C6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {089851EE-B87B-421B-A4E5-7C53D9B44021}
+	EndGlobalSection
+EndGlobal

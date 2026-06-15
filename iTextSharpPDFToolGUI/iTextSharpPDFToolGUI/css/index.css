@@ -1,0 +1,97 @@
+﻿body {
+    margin: 0;
+}
+
+.pdf-viewer {
+    position: relative;
+    margin: 0 400px 0 0;
+    box-sizing: border-box;
+    height: 100vh;
+}
+
+.pdf-viewer .pdf-viewer-page {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    height: auto;
+    border: 1px solid darkgray;
+    background-color: lightgray;
+    box-sizing: border-box;
+    margin: 10px;
+    overflow: auto;
+    text-align: center;
+}
+
+.pdf-viewer .pdf-viewer-page .guide-margins {
+    display: none;
+    position: absolute;
+    top: 0;
+    width: 1098px;
+    height: 1553px;
+    margin: 30px;
+    box-sizing: border-box;
+    border: solid 0px rgba(247, 237, 154, 0.7);
+}
+
+.pdf-viewer .pdf-viewer-page .guide-coord {
+    display: none;
+    position: absolute;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    width: 124px;
+    padding: 5px 0;
+    color: #464545;
+    font-family: monospace;
+    line-height: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    text-shadow: 1px 1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff, -1px -1px 0 #fff;
+}
+
+.pdf-viewer .pdf-viewer-page .guide-coord .x,
+.pdf-viewer .pdf-viewer-page .guide-coord .y {
+    pointer-events: none;
+}
+
+.pdf-viewer .guide-x {
+    display: none;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background-color: darkgray;
+    pointer-events: none;
+}
+
+.pdf-viewer .guide-y {
+    display: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background-color: darkgray;
+    pointer-events: none;
+}
+
+.pdf-viewer canvas {
+    display: none;
+    margin: 30px 30px;
+    -webkit-box-shadow: 3px 3px 5px 0px rgba(50, 50, 50, 0.5);
+    -moz-box-shadow:    3px 3px 5px 0px rgba(50, 50, 50, 0.5);
+    box-shadow:         3px 3px 5px 0px rgba(50, 50, 50, 0.5);
+    cursor: url(../images/crosshair.png) 15 15, crosshair;
+}
+
+.controls-panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 400px;
+    height: 100vh;
+    box-sizing: border-box;
+    padding: 10px;
+    background-color: bisque;
+}

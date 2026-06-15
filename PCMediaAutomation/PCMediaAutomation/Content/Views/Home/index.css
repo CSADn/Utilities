@@ -1,0 +1,35 @@
+﻿@import url('https://fonts.googleapis.com/css?family=Titillium+Web:600&display=swap');
+
+body {
+    padding: 0;
+    margin: 0;
+    background-color: darkgray;
+}
+
+.media-buttons {
+    padding-top: 2em;
+    touch-action: manipulation;
+}
+
+.media-buttons i.typcn {
+    line-height: 100%;
+    touch-action: manipulation;
+}
+
+.volume {
+    padding: 2em 1.5em;
+}
+
+.volume .info {
+    font-family: 'Titillium Web', sans-serif;
+    font-size: 4em;
+    text-align: center;
+}
+
+.volume .info span {
+    display: block;
+}
+
+i.typcn.b-day {
+    font-size: 10em;
+}
