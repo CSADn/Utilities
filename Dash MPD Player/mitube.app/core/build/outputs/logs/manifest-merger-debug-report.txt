@@ -1,16 +1,16 @@
 -- Merging decision tree log ---
 manifest
-ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\core\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest4811220223435414261.xml:2:13-83
-INJECTED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\core\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest4811220223435414261.xml:2:13-83
+ADDED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\core\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest15415108585776632281.xml:2:13-83
+INJECTED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\core\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest15415108585776632281.xml:2:13-83
 	package
-		INJECTED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\core\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest4811220223435414261.xml
+		INJECTED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\core\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest15415108585776632281.xml
 	xmlns:android
-		ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\core\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest4811220223435414261.xml:2:23-81
+		ADDED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\core\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest15415108585776632281.xml:2:23-81
 uses-sdk
-INJECTED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\core\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest4811220223435414261.xml reason: use-sdk injection requested
-INJECTED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\core\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest4811220223435414261.xml
-INJECTED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\core\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest4811220223435414261.xml
+INJECTED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\core\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest15415108585776632281.xml reason: use-sdk injection requested
+INJECTED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\core\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest15415108585776632281.xml
+INJECTED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\core\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest15415108585776632281.xml
 	android:targetSdkVersion
-		INJECTED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\core\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest4811220223435414261.xml
+		INJECTED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\core\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest15415108585776632281.xml
 	android:minSdkVersion
-		INJECTED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\core\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest4811220223435414261.xml
+		INJECTED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\core\build\intermediates\tmp\ProcessLibraryManifest\debug\tempAndroidManifest15415108585776632281.xml

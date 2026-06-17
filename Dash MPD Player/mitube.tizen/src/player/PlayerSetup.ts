@@ -11,6 +11,9 @@ export class PlayerSetup {
   private currentChannel: Channel | null = null;
   private onError: ((msg: string) => void) | null = null;
   private isFlow: boolean = false;
+  /** True if the URL has a pre-signed tok_ JWT in the path (e.g. edge-live21-sl.../tok_<JWT>/...).
+   *  These don't need CDN token generation; the token is baked into the URL. */
+  private hasEmbeddedToken: boolean = false;
   private channelHeaders: Record<string, string> | null = null;
   private cdnToken: string | null = null;
   private cdnTokenExpiresAt: number = 0;
@@ -46,6 +49,7 @@ export class PlayerSetup {
     this.currentChannel = channel;
     this.channelHeaders = channel.headers || null;
     this.isFlow = TokenService.isFlowChannel(channel.headers);
+    this.hasEmbeddedToken = channel.url.includes("/tok_");
     this.cdnToken = null;
     this.cdnTokenExpiresAt = 0;
     this.stopTokenRefreshTimer();
@@ -92,22 +96,68 @@ export class PlayerSetup {
 
       let manifestUrl = url;
       if (this.isFlow && this.channelHeaders) {
-        // Flow: sign URL with CDN token, then let requestFilter
-        // route all Shaka requests through the backend proxy
-        const bearer = await TokenService.getBearerToken();
-        const cdnToken = await TokenService.requestCdnToken(url, bearer, this.channelHeaders);
-        this.cdnToken = cdnToken;
-        this.cdnTokenExpiresAt = Date.now() + 55000;
-        this.startTokenRefreshTimer();
-        const sep = url.includes("?") ? "&" : "?";
-        manifestUrl = `${url}${sep}cdntoken=${cdnToken}`;
+        if (this.hasEmbeddedToken) {
+          // New URL format: token is pre-embedded in the path (/tok_<JWT>/live/...).
+          // Load the manifest directly. No CDN token generation needed.
+          // Segments resolve relative to this URL (including the tok_ prefix).
+          console.log("[Player] URL has embedded token, loading directly");
+        } else {
+          // Old URL format (chromecast.cvattv.com.ar): sign URL with CDN token,
+          // then let requestFilter route all Shaka requests through the backend proxy.
+          const jwt = this.getJwtFromStorage();
+          if (!jwt) throw new Error("No JWT token available (not logged in?)");
+          const cdnToken = await TokenService.requestCdnTokenViaBackend(url, CONFIG.serverUrl, jwt, this.channelHeaders ?? undefined);
+          this.cdnToken = cdnToken;
+          this.cdnTokenExpiresAt = Date.now() + 55000;
+          this.startTokenRefreshTimer();
+          const sep = url.includes("?") ? "&" : "?";
+          manifestUrl = `${url}${sep}cdntoken=${cdnToken}`;
+        }
       }
+
+      // Disable Shaka text visibility by default (we control it manually)
+      this.shakaPlayer.configure({ textDisplay: { visibility: false } });
 
       await this.shakaPlayer.load(manifestUrl);
       console.log("[Player] DASH playing:", channel.name);
+
+      // Defaults: prefer Spanish audio, subtitles off
+      this.applyDefaults();
     } catch (e: any) {
       this.emitError(`Error DASH: ${e.message || e}`);
     }
+  }
+
+  /** Apply default track preferences after stream loads. */
+  private applyDefaults(): void {
+    if (!this.shakaPlayer) return;
+
+    // Set preferred audio language (Shaka will auto-select on load)
+    // For MPDs where both audio tracks have lang="es", try to find
+    // the Spanish track by label / representation ID
+    try {
+      const audioTracks = this.shakaPlayer.getAudioTracks();
+      if (audioTracks.length > 1) {
+        const spanish = (audioTracks as any[]).find((t: any) => {
+          const tid = String(t.id).toLowerCase();
+          const label = (t.label || '').toLowerCase();
+          return tid.includes('spa') || label.includes('spa') ||
+                 tid.includes('español') || label.includes('español') ||
+                 tid.includes('spanish') || label.includes('spanish');
+        });
+        if (spanish) {
+          this.shakaPlayer.selectAudioTrack(spanish);
+          console.log("[Player] Audio: selected Spanish track (id=" + spanish.id + ")");
+        }
+      }
+    } catch (e: any) {
+      console.warn("[Player] applyDefaults audio:", e);
+    }
+
+    // Ensure subtitles are hidden by default
+    try {
+      this.shakaPlayer.setTextTrackVisibility(false);
+    } catch (_) {}
   }
 
   private async loadHls(url: string, channel: Channel): Promise<void> {
@@ -148,18 +198,23 @@ export class PlayerSetup {
         let originalUrl = request.uris[0];
         if (originalUrl.startsWith("data:") || originalUrl.startsWith("blob:")) return;
 
-        // Append or replace CDN token on ALL Flow requests so the backend proxy
-        // forwards it to the CDN upstream (otherwise CDN returns 403 "token required").
-        // The manifest URL already has it from loadDash, but segments resolved
-        // from the MPD don't. Token must be refreshed before expiry (60s), so
-        // always use the current this.cdnToken.
-        if (this.cdnToken) {
-          if (originalUrl.includes("cdntoken=")) {
-            originalUrl = originalUrl.replace(/cdntoken=[^&]+/, `cdntoken=${this.cdnToken}`);
-          } else {
-            const sep = originalUrl.includes("?") ? "&" : "?";
-            originalUrl += `${sep}cdntoken=${this.cdnToken}`;
+        if (!this.hasEmbeddedToken) {
+          // Old URL format: append or replace CDN token on ALL Flow requests.
+          // The manifest URL already has it from loadDash, but segments resolved
+          // from the MPD don't. Token must be refreshed before expiry (60s), so
+          // always use the current this.cdnToken.
+          if (this.cdnToken) {
+            if (originalUrl.includes("cdntoken=")) {
+              originalUrl = originalUrl.replace(/cdntoken=[^&]+/, `cdntoken=${this.cdnToken}`);
+            } else {
+              const sep = originalUrl.includes("?") ? "&" : "?";
+              originalUrl += `${sep}cdntoken=${this.cdnToken}`;
+            }
           }
+        } else {
+          // New URL format: token is already in the path (/tok_<JWT>/...).
+          // No need to append cdntoken query param. Segments resolved from the
+          // MPD inherit the token via the base URL path.
         }
 
         const proxyBase = CONFIG.serverUrl.replace(/\/+$/, "") + "/api/proxy/fetch";
@@ -184,13 +239,12 @@ export class PlayerSetup {
   }
 
   private async handleTokenExpired(): Promise<void> {
-    if (!this.currentChannel || !this.isFlow) return;
+    if (!this.currentChannel || !this.isFlow || this.hasEmbeddedToken) return;
     try {
-      TokenService.invalidateBearer();
-      const bearer = await TokenService.getBearerToken();
-      const cdnToken = await TokenService.requestCdnToken(
-        this.currentChannel.url, bearer,
-        this.channelHeaders || undefined
+      const jwt = this.getJwtFromStorage();
+      if (!jwt) throw new Error("No JWT token available");
+      const cdnToken = await TokenService.requestCdnTokenViaBackend(
+        this.currentChannel.url, CONFIG.serverUrl, jwt, this.channelHeaders ?? undefined
       );
       this.cdnToken = cdnToken;
       this.cdnTokenExpiresAt = Date.now() + 55000;
@@ -207,12 +261,12 @@ export class PlayerSetup {
   private startTokenRefreshTimer(): void {
     this.stopTokenRefreshTimer();
     this._tokenRefreshTimer = setInterval(async () => {
-      if (!this.isFlow || !this.currentChannel) return;
+      if (!this.isFlow || !this.currentChannel || this.hasEmbeddedToken) return;
       try {
-        const bearer = await TokenService.getBearerToken();
-        const cdnToken = await TokenService.requestCdnToken(
-          this.currentChannel.url, bearer,
-          this.channelHeaders || undefined
+        const jwt = this.getJwtFromStorage();
+        if (!jwt) return;
+        const cdnToken = await TokenService.requestCdnTokenViaBackend(
+          this.currentChannel.url, CONFIG.serverUrl, jwt, this.channelHeaders ?? undefined
         );
         this.cdnToken = cdnToken;
         this.cdnTokenExpiresAt = Date.now() + 55000;
@@ -221,6 +275,14 @@ export class PlayerSetup {
         console.warn("[Player] CDN token refresh failed:", e);
       }
     }, 50000);
+  }
+
+  private getJwtFromStorage(): string | null {
+    try {
+      return localStorage.getItem("mitube_token");
+    } catch (_) {
+      return null;
+    }
   }
 
   private stopTokenRefreshTimer(): void {
@@ -246,6 +308,7 @@ export class PlayerSetup {
     this.cdnTokenExpiresAt = 0;
     this.currentChannel = null;
     this.isFlow = false;
+    this.hasEmbeddedToken = false;
     this.channelHeaders = null;
     if (this.shakaPlayer) {
       await this.shakaPlayer.unload();
@@ -260,6 +323,43 @@ export class PlayerSetup {
   get duration(): number { return this.video.duration || 0; }
   get currentTime(): number { return this.video.currentTime || 0; }
   seek(time: number): void { this.video.currentTime = time; }
+
+  // ───────── Track selection API (proxy to shakaPlayer) ─────────
+
+  getVariantTracks(): any[] {
+    return this.shakaPlayer ? this.shakaPlayer.getVariantTracks() : [];
+  }
+  getAudioTracks(): any[] {
+    return this.shakaPlayer ? this.shakaPlayer.getAudioTracks() : [];
+  }
+  getTextTracks(): any[] {
+    return this.shakaPlayer ? this.shakaPlayer.getTextTracks() : [];
+  }
+  selectVariantTrack(track: any, clearBuffer?: boolean): void {
+    this.shakaPlayer?.selectVariantTrack(track, clearBuffer);
+  }
+  selectAudioTrack(track: any, clearBuffer?: boolean): void {
+    (this.shakaPlayer as any)?.selectAudioTrack(track, clearBuffer);
+  }
+  selectTextTrack(track: any): void {
+    this.shakaPlayer?.selectTextTrack(track);
+  }
+  setTextTrackVisibility(visible: boolean): void {
+    this.shakaPlayer?.setTextTrackVisibility(visible);
+  }
+  configureAbr(enabled: boolean): void {
+    this.shakaPlayer?.configure({ abr: { enabled } });
+  }
+
+  /** Register a callback for Shaka 'trackschanged' event. Returns an unsubscribe function. */
+  onTracksChanged(cb: () => void): () => void {
+    if (!this.shakaPlayer) return () => {};
+    const handler = () => cb();
+    this.shakaPlayer.addEventListener('trackschanged', handler);
+    return () => {
+      this.shakaPlayer?.removeEventListener('trackschanged', handler);
+    };
+  }
 
   async destroy(): Promise<void> {
     this.destroyCurrent();

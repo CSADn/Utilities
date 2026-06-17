@@ -13,6 +13,17 @@ Formato JSON canales en `samples/`:
 [{ "name": "📺 DEPORTES", "samples": [{ "name": "Dsports 1", "url": "...", "type": "CLEARKEY", "drm_license_uri": "...", "icono": "...", "headers": { "Origin": "...", "Referer": "...", "User-Agent": "..." } }] }]
 ```
 
+### Flow Channels — Dos Formatos de URL (crítico)
+
+Los canales Flow (`headers != null`) existen en dos formatos de URL mutuamente excluyentes:
+
+| Formato | Dominio | Token | Estado |
+|---|---|---|---|
+| **Antiguo** | `chromecast.cvattv.com.ar` | `?cdntoken=<JWT>` generado por `cdn-token.app.flow.com.ar` + `piratacodigo.json` | **MUERTO** (403 desde Jun 2026) |
+| **Nuevo** | `edge-live{XX}-sl.cvattv.com.ar` | Pre-embebido en el path (`/tok_<JWT>/live/...`) | **ACTIVO** |
+
+**Regla de detección:** `channel.url.includes("/tok_")` → nuevo formato. No necesita CDN token generation. El proxy del backend solo inyecta headers Origin/Referer/UA en segmentos. Ver sección "Fix: CDN URL Format Change" más abajo.
+
 ---
 
 ## Stack Tecnológico
@@ -55,7 +66,7 @@ Dash MPD Player/
 │   ├── Services/
 │   │   ├── JwtService.cs               ← Generación de JWT (HS256)
 │   │   ├── IJwtService.cs
-│   │   ├── CdnTokenService.cs          ← Fetch bearer token + CDN token (piratacodigo + cdn-token generator)
+│   │   ├── CdnTokenService.cs          ← Fetch bearer token + CDN token (solo para formato antiguo chromecast; URLs con /tok_ se saltan)
 │   │   ├── ChannelCacheService.cs      ← IMemoryCache + FileSystemWatcher
 │   │   ├── IChannelCacheService.cs
 │   │   └── Repositories/
@@ -370,7 +381,7 @@ El overlay del player (header con nombre, botón cerrar, badge "EN VIVO") tiene 
 Usos:
 - Login (JWT)
 - Sincronización de JSON de canales
-- Obtención de CDN tokens para canales Flow (`GET /api/proxy/cdn-token?url=<mpd>` con JWT)
+- Obtención de CDN tokens para canales Flow antiguos (`GET /api/proxy/cdn-token?url=<mpd>` con JWT) — no usado para URLs con `/tok_` (nuevo formato)
 - Validación de token JWT al inicio (`GET /api/auth/validate`)
 - NO para tráfico de video
 
@@ -447,7 +458,9 @@ Android usa su propio proxy local (NanoHTTPd en `ProxyServer.kt`), pero el Token
 
 ```
 Android ProxyServer.handleManifest()
-  └→ TokenService.getCdnTokenAsync(mpdUrl)
+  ├→ ¿URL contiene /tok_?
+  │   └→ SÍ → skip (token embebido, no necesita CDN token)
+  └→ NO → TokenService.getCdnTokenAsync(mpdUrl)
       └→ GET /api/proxy/cdn-token?url=<encoded_mpd> (JWT autenticado)
           └→ Backend CdnTokenService.GetBearerTokenAsync() → piratacodigo.json (1h cache)
           └→ Backend CdnTokenService.RequestCdnTokenAsync() → cdn-token.app.flow.com.ar
@@ -456,6 +469,8 @@ Android ProxyServer.handleManifest()
   └→ Fetch del MPD firmado con headers Origin/Referer
   └→ Rewrite de URLs de segmentos al proxy local
 ```
+
+> **Nota:** Desde Jun 2026, el flujo antiguo (chromecast + cdn-token.app) está muerto. Las URLs nuevas tienen el token embebido (`/tok_`). Android necesita actualización similar a Tizen: detectar `/tok_` en `TokenService.kt` y `ProxyServer.kt` para saltar el CDN token generation. Ver sección "Fix: CDN URL Format Change".
 
 ### manifestUrl / licenseProxyUrl para canales Flow
 
@@ -476,13 +491,13 @@ val enrichedChannel = if (proxyPort > 0 && channel.headers != null) {
 
 ## Limitaciones Conocidas
 
-1. Canales Flow requieren proxy local para inyectar headers Origin/Referer — no funciona desde browser puro
+1. Canales Flow requieren proxy local o backend proxy para inyectar headers Origin/Referer en segmentos — no funciona desde browser puro
 2. Clearkey no requiere proxy de licencia (keyId+key se pasan directo a Shaka)
 3. Autoplay con sonido requiere user gesture (muted autoplay funciona)
 4. Android WebView debe tener EME habilitado (System WebView Chromium ≥ API 24)
 5. El proxy en Android debe correr como Foreground Service para no ser killado
-6. Tokens CDN tienen expiración corta — MPD re-fetch cada 2s (live streams)
-7. `piratacodigo.json` es punto único de fallo (sin autenticación)
+6. **Tokens nuevo formato (tok_):** tienen vigencia ~18h (según `exp` del JWT embebido). Las URLs en `canales.json` expiran y deben refrescarse periódicamente. No hay renovación automática (el token está en el path de la URL estática).
+7. `piratacodigo.json` es punto único de fallo (sin autenticación). Desde Jun 2026 el flujo antiguo (chromecast + cdn-token.app) está muerto, por lo que este endpoint ya no es necesario para el formato actual.
 8. Android WebView muestra un placeholder gris con botón de play en `<video>` antes de cargar la transmisión. El shadow DOM interno de Chromium renderiza un overlay que `poster=""` no desactiva. **Solución validada** (3 capas):
    - `poster` con data URI de píxel transparente: `poster="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"`
    - CSS para ocultar shadow DOM: `video::-webkit-media-controls{display:none!important}` + `video::-webkit-media-controls-overlay-play-button{display:none!important}` + `video::-webkit-media-controls-start-playback-button{display:none!important}`
@@ -597,7 +612,8 @@ dotnet run
 
 - Shaka Player 4.x: `https://cdn.jsdelivr.net/npm/shaka-player@4/dist/shaka-player.compiled.js`
 - hls.js: `https://cdn.jsdelivr.net/npm/hls.js@latest`
-- CDN Flow: `cdn-token.app.flow.com.ar`, `app.femon.net/pirata/piratacodigo.json`
+- CDN Flow (antiguo, muerto): `cdn-token.app.flow.com.ar`, `app.femon.net/pirata/piratacodigo.json`
+- CDN Flow (nuevo, activo): `edge-live{XX}-sl.cvattv.com.ar` (token embebido en path `/tok_<JWT>/live/...`)
 
 ---
 
@@ -1001,39 +1017,65 @@ SettingsView:
 
 ### Proxy Flow en Tizen (Flow Channels)
 
-En Tizen **no hay proxy local** (NanoHTTPd), pero los canales Flow requieren headers Origin/Referer/User-Agent que XHR no puede setear. La solución es **routing a través del backend** (`mitube.service`) en el mismo LAN:
+En Tizen **no hay proxy local** (NanoHTTPd), pero los canales Flow requieren headers Origin/Referer/User-Agent que XHR no puede setear. La solución es **routing a través del backend** (`mitube.service`) en el mismo LAN.
 
-```
-TV (Shaka requestFilter)
-  └→ request.uris[0] reescrito a http://backend:5241/api/proxy/fetch?url=<encoded_cdn_url>
-  └→ headers: X-Proxy-Origin, X-Proxy-Referer, X-Proxy-User-Agent
-  └→ Backend: HttpClient (TryAddWithoutValidation) → CDN con headers correctos
-  └→ Backend: si es DASH manifest → inyecta <BaseURL>CDN_origin</BaseURL>
-  └→ Shaka: resuelve segmentos relativos a BaseURL (CDN) → requestFilter → proxy otra vez
-```
+#### Dos Formatos de URL Flow
 
-| Función | Android Proxy Local | Tizen (Flow) | Tizen (no-Flow) |
+| Formato | Ejemplo | CDN Token | Vigencia |
 |---|---|---|---|
-| Manifest fetch | Proxy reescribe MPD | Backend proxy + BaseURL injection | Directo (XHR) |
-| Segment fetch | Proxy forwardea | Backend proxy | Directo (XHR) |
-| License proxy | Proxy forwardea | Backend proxy POST | Directo (EME nativo) |
-| Origin/Referer headers | Proxy local los inyecta | Backend HttpClient (sin restricciones) | N/A |
-| player.html serving | Servido por proxy local | `<script>` tags estáticos | igual |
+| **Antiguo** (chromecast) | `https://chromecast.cvattv.com.ar/live/c3eds/...mpd` | Se genera vía `cdn-token.app.flow.com.ar` + `?cdntoken=<JWT>` | **MUERTO** desde Jun 2026 — el CDN rechaza tokens con 403 |
+| **Nuevo** (edge-live + tok_) | `https://edge-live21-sl.cvattv.com.ar/tok_<JWT>/live/cXeds/...mpd` | Pre-embebido en la ruta (`/tok_<base64url_JWT>/...`) | ~18h (según `exp` claim del JWT) |
 
-**Shaka requestFilter en `PlayerSetup.ts`**:
+#### Nuevo Formato (edge-live + tok_)
+
+Los tokens vienen pre-embebidos en la URL (`tok_<JWT>`) — NO se genera CDN token. El flujo es:
+
+```
+TV (PlayerSetup.loadDash)
+  └→ Detecta /tok_ → hasEmbeddedToken = true
+  └→ NO llama a GET /api/proxy/cdn-token (no hay token que generar)
+  └→ Carga manifest directamente en Shaka con la URL original
+
+TV (Shaka requestFilter)
+  └→ request.uris[0] → proxyBase + "?url=" + encodeURIComponent(originalUrl)
+  └→ headers: X-Proxy-Origin, X-Proxy-Referer, X-Proxy-User-Agent
+  └→ NO append cdntoken (token ya está en path → resuelto automáticamente)
+
+Backend ProxyController
+  └→ Recibe GET /api/proxy/fetch?url=<edge-live21...tok_...mpd>
+  └→ Forwarde con headers Origin/Referer/User-Agent reales
+  └→ Si es manifest DASH → bufferiza, inyecta <BaseURL>, retorna XML
+  └→ Si es segmento/licencia → stream directo
+  └→ La URL upstream ya contiene /tok_<JWT> en path → CDN lo acepta
+```
+
+| Función | Android Proxy Local | Tizen (Flow nuevo) | Tizen (Flow antiguo, muerto) |
+|---|---|---|---|
+| Manifest fetch | Proxy reescribe MPD | Backend proxy + BaseURL injection | Backend proxy + BaseURL + CDN token |
+| CDN token generation | TokenService.kt vía backend | **SKIP** (token embebido) | GET /api/proxy/cdn-token → `cdn-token.app.flow.com.ar` |
+| Segment fetch | Proxy forwardea | Backend proxy | Backend proxy + cdntoken append |
+| Origin/Referer headers | Proxy local los inyecta | Backend HttpClient (sin restricciones) | Backend HttpClient |
+| player.html serving | Servido por proxy local | `<script>` tags estáticos | idem |
+
+**Shaka requestFilter en `PlayerSetup.ts`** (actualizado Jun 2026):
 
 ```typescript
 // Flow channels: rewrite ALL Shaka requests to backend proxy
 let originalUrl = request.uris[0];
-// Guard: skip data:/blob: URIs
 if (originalUrl.startsWith("data:") || originalUrl.startsWith("blob:")) return;
 
-// Append CDN token to ALL requests (manifest already has it from loadDash,
-// but segments resolved from MPD don't — CDN returns 403 "token required")
-if (this.cdnToken && !originalUrl.includes("cdntoken=")) {
-  const sep = originalUrl.includes("?") ? "&" : "?";
-  originalUrl += `${sep}cdntoken=${this.cdnToken}`;
+if (!this.hasEmbeddedToken) {
+  // OLD format: append/replace cdntoken query param
+  if (this.cdnToken) {
+    if (originalUrl.includes("cdntoken=")) {
+      originalUrl = originalUrl.replace(/cdntoken=[^&]+/, `cdntoken=${this.cdnToken}`);
+    } else {
+      const sep = originalUrl.includes("?") ? "&" : "?";
+      originalUrl += `${sep}cdntoken=${this.cdnToken}`;
+    }
+  }
 }
+// NEW format (hasEmbeddedToken): token already in path, skip cdntoken append
 
 const proxyBase = CONFIG.serverUrl + "/api/proxy/fetch";
 const h = channel.headers;
@@ -1744,3 +1786,538 @@ Request finished ... cdntoken=<NUEVO_TOKEN> - 200 ... application/dash+xml
 ```
 
 Si después del primer 403 NO hay requests 200 con un token distinto → el error handler no se está disparando (probablemente Bug 1).
+
+---
+
+## Fix: CDN URL Format Change (chromecast → edge-live21) — Jun 2026
+
+### Contexto
+En Jun 2026, Flow cambió el formato de URLs de sus streams DASH. El dominio `chromecast.cvattv.com.ar` dejó de aceptar tokens del generador `cdn-token.app.flow.com.ar` (devuelve 403 "Invalid token: Error TA.IT" para todos los tokens). Las nuevas URLs usan el dominio `edge-live{XX}-sl.cvattv.com.ar` con un token JWT pre-embebido en la ruta (`/tok_<base64url_JWT>/live/...`).
+
+### Diferencias Clave
+
+| Aspecto | Antiguo (chromecast) | Nuevo (edge-live21) |
+|---|---|---|
+| Dominio | `chromecast.cvattv.com.ar` | `edge-live{XX}-sl.cvattv.com.ar` |
+| Token | `?cdntoken=<JWT>` (query param) | `/tok_<JWT>/live/...` (en path) |
+| Generación token | `cdn-token.app.flow.com.ar` + `piratacodigo.json` bearer | Pre-embebido por Flow en la URL del canal |
+| Vigencia token | ~60s | ~18h (según `exp` del JWT) |
+| Headers requeridos | Origin/Referer/UA para manifest y segments | Manifest OK sin headers; segments requieren Origin/Referer/UA |
+| Estado | **MUERTO** (403 permanente desde Jun 2026) | **ACTIVO** |
+
+### Cambios en el Código
+
+#### 1. `PlayerSetup.ts` — Detección de Formato de URL
+
+Nuevo campo `hasEmbeddedToken` se setea en `loadChannel()`:
+
+```typescript
+this.hasEmbeddedToken = channel.url.includes("/tok_");
+```
+
+- `hasEmbeddedToken = true` → nuevo formato: skip CDN token generation, proxy solo para headers
+- `hasEmbeddedToken = false` → antiguo formato: CDN token generation + proxy con `?cdntoken=`
+
+#### 2. `PlayerSetup.ts` — loadDash
+
+```typescript
+if (this.hasEmbeddedToken) {
+  // Cargar manifest directamente, sin CDN token generation
+} else {
+  // Flujo antiguo: GET /api/proxy/cdn-token, append ?cdntoken=
+}
+```
+
+#### 3. `PlayerSetup.ts` — requestFilter
+
+```typescript
+if (!this.hasEmbeddedToken) {
+  // Solo para formato antiguo: append/replace cdntoken query param
+  if (this.cdnToken) { ... }
+}
+// Para formato nuevo: no se toca cdntoken (token está en path)
+// Ambos formatos: proxy para headers Origin/Referer/UA
+```
+
+#### 4. `PlayerSetup.ts` — Timer y Token Expired
+
+```typescript
+// handleTokenExpired y startTokenRefreshTimer skip si hasEmbeddedToken
+if (!this.isFlow || !this.currentChannel || this.hasEmbeddedToken) return;
+```
+
+#### 5. `ProxyController.cs` — isFlowCdn check
+
+```csharp
+var isFlowCdn = url.Contains("chromecast.cvattv.com.ar") 
+    || url.Contains("cdn-token.app.flow.com.ar") 
+    || url.Contains("edge-live");  // ← agregado
+```
+
+#### 6. `ProxyController.cs` — GetCdnToken endpoint
+
+```csharp
+if (url.Contains("/tok_"))
+{
+    return Ok(new { cdnToken = (string?)null, bearerToken = (string?)null, message = "embedded" });
+}
+```
+
+#### 7. `CdnTokenService.cs` — RequestCdnTokenAsync
+
+```csharp
+if (mpdUrl.Contains("/tok_"))
+{
+    // Defensivo: si llega una URL con token embebido, no procesar
+    return "";
+}
+```
+
+### Flujo Actual (Jun 2026)
+
+```
+Tizen PlayerSetup.loadDash()
+  ├→ ¿URL contiene /tok_?
+  │   ├→ SÍ: hasEmbeddedToken = true
+  │   │    └→ Carga directamente en Shaka
+  │   │    └→ requestFilter: proxy para headers, NO cdntoken
+  │   └→ NO: hasEmbeddedToken = false
+  │        └→ GET /api/proxy/cdn-token (CDN token generation)
+  │        └→ Append ?cdntoken= a la URL
+  │        └→ requestFilter: proxy + cdntoken en todos los requests
+  │
+  └→ Backend recibe /api/proxy/fetch?url=<upstream>
+       └→ Inyecta headers Origin/Referer/UA
+       └→ Si es manifest DASH → bufferiza, inyecta <BaseURL>
+       └→ Stream directo para segmentos/licencias
+```
+
+### Implicaciones
+
+- Las URLs de canales en `canales.json` ahora contienen tokens pre-embebidos con vigencia ~18h
+- El usuario debe actualizar `canales.json` periódicamente (cuando los tokens expiren)
+- No hay CDN token generation para las nuevas URLs → menos dependencia de `piratacodigo.json` y `cdn-token.app.flow.com.ar`
+- El proxy del backend sigue siendo necesario para segmentos (headers Origin/Referer/UA)
+- **Android app también necesita actualización** — `TokenService.kt` y `ProxyServer.kt` deben implementar la misma detección de `/tok_` para saltar el CDN token generation, similar a `PlayerSetup.ts`.
+
+### Debugging Flow Channels (Metodología)
+
+Cuando un canal Flow deja de funcionar (403), seguir estos pasos:
+
+1. **Revisar logs del backend** — `mitube.service/Logs/app-YYYY-MM-DD.log`
+   - Buscar `Proxy upstream error 403 for ...` y el `responseBody` logueado
+   - Si el body contiene `"Invalid token: Error TA.IT"` → el CDN rechaza el token, no es problema de headers/proxy
+2. **Aislar el problema con curl** desde la máquina de desarrollo (bypass del proxy):
+   ```powershell
+   curl.exe -v "<mpd_url>" 2>&1
+   # Si también da 403 → el token/URL está muerto, no es problema de la app
+   ```
+3. **Verificar formato de URL:**
+   - `chromecast.cvattv.com.ar` + `?cdntoken=` → **flujo muerto** (Jun 2026+)
+   - `edge-live{XX}-sl.cvattv.com.ar/tok_<JWT>/live/...` → **flujo activo**
+4. **Si la URL es nueva** (edge-live con tok_): probar sin headers primero (solo manifest)
+   ```powershell
+   curl.exe -v "https://edge-live21-sl.cvattv.com.ar/tok_<JWT>/live/...channel.mpd"
+   # Si devuelve 200 → manifest OK, probar segmento con headers:
+   curl.exe -v -H "Origin: https://www.flow.com.ar" -H "Referer: https://www.flow.com.ar/" "https://edge-live21-sl.../segment-$RepresentationID$.mp4"
+   ```
+5. **Si el manifest carga pero los segmentos no** → falta headers Origin/Referer/UA → el requestFilter del Tizen o el proxy del backend deben inyectarlos
+6. **Actualizar `canales.json`** si los tokens expiraron (vigencia ~18h)
+
+---
+
+## FASE 1 — Tizen: Selectores de Calidad/Audio/Subtítulos
+
+### Feature: Netflix-style settings overlay en el player
+
+**Archivos modificados:**
+
+| Archivo | Cambio |
+|---|---|
+| `mitube.tizen/index.html` | Agregado `#player-settings` panel (3 filas: calidad, audio, subtítulos) + botón ⚙ en bottom bar |
+| `mitube.tizen/css/player.css` | Nuevas clases `.player-settings`, `.ps-row`, `.ps-value`, `.ps-arrow` (Netflix-style overlay) |
+| `mitube.tizen/src/player/PlayerSetup.ts` | Track proxy methods (`getVariantTracks`, `getAudioTracks`, `getTextTracks`, `selectVariantTrack`, `selectAudioTrack`, `selectTextTrack`, `setTextTrackVisibility`, `configureAbr`, `onTracksChanged`) + defaults (audio español, subtítulos off) vía `applyDefaults()` |
+| `mitube.tizen/src/ui/PlayerView.ts` | Settings overlay toggle, track enumeration (`refreshTrackOptions`), D-pad navigation (⬆⬇ entre filas, ⬅➡ cicla opciones), auto-hide management, `trackschanged` listener |
+
+### Arquitectura
+
+```
+Player Setup (PlayerSetup.ts)              Player View (PlayerView.ts)
+┌─────────────────────────────┐           ┌─────────────────────────────┐
+│ getVariantTracks()          │◄──────────│ refreshTrackOptions()       │
+│ getAudioTracks()            │           │   quality: [Auto,240p,...]  │
+│ getTextTracks()             │           │   audio: [English,Español]  │
+│ selectVariantTrack(t,cb)    │           │   subtitle: [Off,Español]   │
+│ selectAudioTrack(t,cb)      │──────────►│ applyCurrentSelection()     │
+│ selectTextTrack(t)          │           └─────────────────────────────┘
+│ setTextTrackVisibility(b)   │                       │ keydown handler
+│ configureAbr(enabled)       │                  ⬆/⬇/⬅/➡/Enter/Back
+│ onTracksChanged(cb)         │                       ▼
+│ applyDefaults()             │           ┌─────────────────────────────┐
+└─────────────────────────────┘           │ D-pad Navigation:           │
+                                          │ settingsFocusRow (0-2)      │
+                                          │ cycleOption(direction)      │
+                                          │ applyCurrentSelection()     │
+                                          └─────────────────────────────┘
+```
+
+### Defaults al cargar canal
+
+```typescript
+// En PlayerSetup.applyDefaults() tras player.load():
+// 1. Audio: busca track cuya label/id contenga 'spa','español','spanish'
+//    y ejecuta player.selectAudioTrack(track)
+// 2. Subtítulos: player.setTextTrackVisibility(false)
+// 3. ABR: player.configure({ abr: { enabled: true } }) — default de Shaka
+```
+
+### Navegación D-pad en Settings
+
+| Tecla | Acción |
+|---|---|
+| ⬆ | `focusSettingsRow(row - 1)` — fila anterior (wrap) |
+| ⬇ | `focusSettingsRow(row + 1)` — fila siguiente (wrap) |
+| ⬅ | `cycleOption(-1)` — opción anterior en la fila actual |
+| ➡ | `cycleOption(1)` — opción siguiente en la fila actual |
+| Enter | `cycleOption(1)` — misma acción que ➡ (quick-select) |
+| Back (10009) | `hideSettings()` → cierra panel sin cambiar selección |
+| Escape/Backspace | `hideSettings()` |
+
+### Auto-hide Behavior
+
+| Estado | Overlay principal | Settings panel | Timer |
+|---|---|---|---|
+| Settings cerrado | oculto tras 4s | oculto | Normal |
+| Usuario abre ⚙ | visible (permanente) | visible | CANCELADO |
+| Usuario cierra settings | visible (reinicia 4s) | oculto | REINICIADO |
+| Settings abierto + Back | visible (4s new) | oculto | REINICIADO |
+
+### Track Live Updates
+
+- Suscripción a `player.addEventListener('trackschanged')` vía `onTracksChanged()`
+- En cada evento: `refreshTrackOptions()` re-enumera tracks
+- **Preserva selección actual** (no resetea a default)
+
+### API Shaka expuesta en PlayerSetup
+
+```typescript
+getVariantTracks(): any[]       // Calidades disponibles
+getAudioTracks(): any[]         // Pistas de audio
+getTextTracks(): any[]          // Subtítulos/CC
+selectVariantTrack(track, clearBuffer?)
+selectAudioTrack(track, clearBuffer?)
+selectTextTrack(track)
+setTextTrackVisibility(visible: boolean)
+configureAbr(enabled: boolean)  // Habilita/deshabilita ABR
+onTracksChanged(cb): unsubscribeFn  // Listener para live DASH
+```
+
+### Bugfixes & UX: Navegación D-pad en Player Toolbar
+
+| Archivo | Cambio |
+|---|---|
+| `mitube.tizen/src/ui/PlayerView.ts` | Sistema de foco para bottom bar (play/settings/back), ArrowDown abre controles + foco ⚙, reset índices por canal, sync con Shaka active tracks |
+| `mitube.tizen/css/player.css` | Contraste mejorado: botón normal `rgba(255,255,255,0.15)`, enfocado `rgba(0,188,212,0.6)` (cyan) |
+
+#### Toolbar D-pad Navigation
+
+**Campos agregados:**
+
+```typescript
+private toolbarFocusIndex: number = -1;   // -1 = no button focused
+private toolbarButtons: HTMLElement[] = []; // [playBtn, btn-settings, backBtn]
+```
+
+**Método `focusToolbarButton(index)`:** aplica/quita clase `.focused` sobre los botones (sin foco nativo del browser). Soporta wrapping en bordes.
+
+**Navegación (overlay visible, settings cerrado):**
+
+| Tecla | Acción |
+|---|---|
+| Enter | Si hay botón enfocado → `click()`; si no → toggle overlay |
+| ⬅ | Si enfocado → anterior (wrap); si no → enfocar último |
+| ➡ | Si enfocado → siguiente (wrap); si no → enfocar primero |
+| ⬇ | Si overlay oculto → muestra overlay + foco en ⚙ + timer 4s |
+| ⬆ | Si enfocado → desenfocar toolbar |
+| Back | Volver a Browse |
+
+**Comportamiento de ArrowDown:**
+
+```
+ArrowDown + overlay oculto → showOverlay() + focusToolbarButton(1) + startOverlayTimer()
+ArrowDown + overlay visible → NOP
+```
+
+#### Reset y Sync de Índices por Canal
+
+**Reset en `show()` antes de `loadChannel()`:**
+
+```typescript
+this.qualityIndex = 0;   // Auto
+this.audioIndex = 0;
+this.subtitleIndex = 0;  // Off
+```
+
+**Sync con Shaka después de `refreshTrackOptions()`:**
+
+```typescript
+const activeAudio = (this.player.getAudioTracks() || []).findIndex((t: any) => t.active);
+if (activeAudio >= 0) this.audioIndex = activeAudio;
+
+const activeText = (this.player.getTextTracks() || []).findIndex((t: any) => t.active);
+this.subtitleIndex = activeText >= 0 ? Math.min(activeText + 1, this.subtitleOptions.length - 1) : 0;
+
+this.updateSettingsDisplay();
+```
+
+Esto refleja en la UI del settings lo que `PlayerSetup.applyDefaults()` ya seleccionó en Shaka (español + subtítulos off).
+
+#### Contraste de Botones (player.css)
+
+```css
+.player-btn {
+  background: rgba(255, 255, 255, 0.15);   /* default más tenue */
+}
+.player-btn.focused,
+.player-btn:focus {
+  background: rgba(0, 188, 212, 0.6);      /* cyan transparente */
+  box-shadow: 0 0 12px rgba(0, 188, 212, 0.4);
+}
+```
+
+---
+
+## FASE 2 — Android: Selectores de Calidad/Audio/Subtítulos
+
+### Feature: Netflix-style settings overlay en player.html (touch + D-pad)
+
+**Archivos modificados:**
+
+| Archivo | Cambio |
+|---|---|
+| `mobile/src/main/assets/player.html` | CSS + HTML + JS: settings panel Netflix-style, picker inline expandible, defaults (audio spa, subtítulos off), `refreshTrackOptions()`, `applyDefaults()`, touch navigation |
+| `tv/src/main/assets/player.html` | Misma implementación pero con D-pad navigation (`onKeyDown` para ⬆⬇⬅➡) + `channel.drmLicenseUri` (camelCase, ya existente) |
+
+### Arquitectura
+
+```
+player.html (JS, single-file)
+┌─────────────────────────────────────┐
+│ init() → loadChannel(channel)       │
+│   └─ player.load() exitoso          │
+│      └─ applyDefaults()             │
+│         ├─ busca audio español      │
+│         ├─ setTextTrackVisibility(f)│
+│         └─ refreshTrackOptions()    │
+│                                     │
+│ toggleSettings() ──────────────────►│
+│   showSettings()                    │
+│   └─ refreshTrackOptions()          │
+│   └─ muestra #settings-panel        │
+│   └─ (mobile) expande picker tap    │
+│   └─ (TV) ⬆⬇ navega filas          │
+│                                     │
+│ onSettingsRowClick(cat) (mobile)     │
+│   └─ renderPicker(cat) ──► selectOption(cat, idx)
+│                              └─ player.selectAudioTrack()
+│                              └─ player.selectVariantTrack()
+│                              └─ player.setTextTrackVisibility()
+│
+│ cycleOption(cat, dir) (TV D-pad)     │
+│   └─ navega ⬅➡, aplica al instante │
+│                                     │
+│ player.addEventListener('trackschanged') ──► refreshTrackOptions()
+└─────────────────────────────────────┘
+```
+
+### Mobile — Touch Navigation
+
+- Tap en ⚙ → abre settings panel con 3 filas (Calidad, Audio, Subtítulos)
+- Tap en fila → expande picker inline con opciones
+- Tap en opción → selecciona, cierra picker
+- Tap fuera del panel o en video → cierra settings
+- Timer de auto-hide de controles: CANCELADO mientras settings abierto
+
+### TV — D-pad Navigation
+
+- ⚙ es focusable vía control remoto (junto a fullscreen)
+- Al abrir settings: primera fila (Calidad) recibe `.focused`
+- ⬆⬇ → mueve `.focused` entre filas (wrap)
+- ⬅➡ → cicla opciones dentro de la fila, aplica al instante
+- Enter → misma acción que ➡ (quick-select)
+- Back/Escape → cierra settings
+- Las flechas NO afectan el overlay cuando settings está abierto
+
+### Auto-hide Behavior (Android)
+
+| Estado | Controls bar | Settings panel | Timer |
+|---|---|---|---|
+| Settings cerrado | oculto tras 3-5s | oculto | Normal |
+| Usuario abre settings | visible (permanente) | visible | CANCELADO |
+| Usuario cierra settings | visible (reinicia timer) | oculto | REINICIADO |
+
+### Track Live Updates
+
+- Suscripción a `player.addEventListener('trackschanged')` en `init()`
+- En cada evento: `refreshTrackOptions()` re-enumera tracks
+- Preserva selección actual del usuario
+
+### Defaults al cargar canal
+
+```javascript
+function applyDefaults() {
+  // 1. Busca audio español por label/id conteniendo 'spa','spanish','español'
+  // 2. player.selectAudioTrack(track)
+  // 3. player.setTextTrackVisibility(false)
+  // 4. refreshTrackOptions()
+}
+```
+
+### UI de Settings (mobile — inline picker)
+
+```
+┌──────────────────────────────┐
+│  ⚙ Settings                  │
+│  ─────────────────────       │
+│  Calidad: Auto      [tap →]  │
+│  ┌────────────────────────┐  │
+│  │ [Auto] [240p] [360p]   │  │  ← expandido al tap
+│  │ [480p] [576p] [720p]   │  │
+│  └────────────────────────┘  │
+│  Audio: Español     [tap →]  │
+│  Subtítulos: Off     [tap →] │
+└──────────────────────────────┘
+```
+
+### UI de Settings (TV — values inline)
+
+```
+┌──────────────────────────────┐
+│  ⚙ Settings                  │
+│  ─────────────────────       │
+│  ◄ Calidad: Auto ►    ← focused │
+│  Audio: Español              │
+│  Subtítulos: Off             │
+└──────────────────────────────┘
+```
+
+### API Shaka usada en Android
+
+```javascript
+// Calidad
+player.getVariantTracks()        → Track[]
+player.configure({ abr: { enabled: true/false } })
+player.selectVariantTrack(track, clearBuffer)
+
+// Audio
+player.getAudioTracks()          → Track[]
+player.selectAudioTrack(track, clearBuffer)
+
+// Subtítulos
+player.getTextTracks()           → Track[]
+player.selectTextTrack(track)
+player.setTextTrackVisibility(boolean)
+```
+
+---
+
+## FASE 3 — WPF: Selectores de Calidad/Audio/Subtítulos
+
+### Feature: Settings overlay en player.html (mouse, inline picker)
+
+**Archivo modificado:**
+- `DashMPDPlayer/Web/player.html` — CSS + HTML + JS: settings panel Netflix-style, picker inline expandible vía click, defaults (audio spa, subtítulos off), `refreshTrackOptions()`, `applyDefaults()`, click-to-select
+
+### Arquitectura
+
+```
+player.html (JS, single-file, existing codebase)
+┌─────────────────────────────────────┐
+│ init() → shaka.Player + trackschanged│
+│   listener → refreshTrackOptions()   │
+│                                      │
+│ loadChannel(channel) → player.load() │
+│   └─ .then() → applyDefaults()       │
+│      ├─ busca audio español          │
+│      ├─ setTextTrackVisibility(f)    │
+│      └─ refreshTrackOptions()        │
+│                                      │
+│ toggleSettings() ───────────────────►│
+│   showSettings()                     │
+│   └─ refreshTrackOptions()           │
+│   └─ muestra #settings-panel         │
+│                                      │
+│ onSettingsRowClick(cat)              │
+│   └─ expande/collapse picker inline  │
+│   └─ selectOption(cat, value)        │
+│       ├─ player.selectVariantTrack() │
+│       ├─ player.selectAudioTrack()   │
+│       └─ player.setTextTrackVis()    │
+│                                      │
+│ Click outside panel → closeSettings  │
+└─────────────────────────────────────┘
+```
+
+### Interacción (Mouse)
+
+- ⚙ en barra de controles → abre settings panel (3 rows: Calidad, Audio, Subtítulos)
+- Click en fila → expande/colapsa picker inline con opciones
+- Click en opción → selecciona, mantiene picker abierto
+- Click fuera del panel o en video → cierra settings
+- Timer de auto-hide: CANCELADO mientras settings abierto
+- Al cambiar de canal: settings se cierra automáticamente, selecciones resetean
+
+### Auto-hide Behavior
+
+| Estado | Controls bar | Settings panel | Timer |
+|---|---|---|---|
+| Settings cerrado | oculto tras 3s | oculto | Normal |
+| Usuario abre settings | visible (permanente) | visible | CANCELADO |
+| Usuario cierra settings | reinicia timer 3s | oculto | REINICIADO |
+
+### Track Live Updates
+
+- Suscripción a `player.addEventListener('trackschanged')` en `init()`
+- En cada evento: `refreshTrackOptions()` re-enumera tracks (solo si visible)
+- Preserva selección actual del usuario
+- Selecciones resetean al cargar nuevo canal (`selectedTracks = { quality: -1, audio: -1, subtitle: -1 }`)
+
+### Defaults al cargar canal
+
+```javascript
+function applyDefaults() {
+  // 1. Busca audio español por label/id conteniendo 'spa','spanish','español'
+  // 2. player.selectAudioTrack(track)
+  // 3. player.setTextTrackVisibility(false)
+  // 4. refreshTrackOptions()
+}
+```
+
+### UI de Settings (WPF — inline picker)
+
+```
+┌──────────────────────────────┐
+│  ⚙ Ajustes                   │
+│  ─────────────────────       │
+│  Calidad: Auto      [click]  │
+│  ┌────────────────────────┐  │
+│  │ [Auto] [240p] [360p]   │  │  ← expandido al click
+│  │ [480p] [576p] [720p]   │  │
+│  └────────────────────────┘  │
+│  Audio: Español      [click] │
+│  Subtítulos: Off     [click] │
+└──────────────────────────────┘
+```
+
+### API Shaka usada en WPF
+
+```javascript
+player.getVariantTracks()        → Track[]
+player.configure({ abr: { enabled: true/false } })
+player.selectVariantTrack(track, clearBuffer)
+player.getAudioTracks()          → Track[]
+player.selectAudioTrack(track, clearBuffer)
+player.getTextTracks()           → Track[]
+player.selectTextTrack(track)
+player.setTextTrackVisibility(boolean)
+```

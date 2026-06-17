@@ -1,10 +1,10 @@
 -- Merging decision tree log ---
 manifest
-ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:2:1-42:12
-INJECTED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:2:1-42:12
-INJECTED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:2:1-42:12
-INJECTED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:2:1-42:12
-MERGED from [:core] D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\core\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-7:12
+ADDED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:2:1-42:12
+INJECTED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:2:1-42:12
+INJECTED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:2:1-42:12
+INJECTED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:2:1-42:12
+MERGED from [:core] D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\core\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.appcompat:appcompat-resources:1.6.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\90a0b599474c83afbd6cd0947060d285\transformed\appcompat-resources-1.6.1\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.appcompat:appcompat:1.6.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\62c2f4d849ef0912bb4f3744317e43a1\transformed\appcompat-1.6.1\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.leanback:leanback:1.0.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\80b375ec7bb10d027ec7069931a74e9c\transformed\leanback-1.0.0\AndroidManifest.xml:17:1-22:12
@@ -58,40 +58,40 @@ MERGED from [androidx.documentfile:documentfile:1.0.0] C:\Users\Inspiron15\.grad
 MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\3df911c6c27077da1e50b22036cad979\transformed\localbroadcastmanager-1.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.print:print:1.0.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\4d9bfe84faa45778284d5137cfe54433\transformed\print-1.0.0\AndroidManifest.xml:17:1-22:12
 	package
-		INJECTED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml
+		INJECTED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml
 	android:versionName
-		INJECTED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml
+		INJECTED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml
 	android:versionCode
-		INJECTED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml
+		INJECTED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml
 	xmlns:android
-		ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:2:11-69
+		ADDED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:2:11-69
 uses-permission#android.permission.INTERNET
-ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:4:5-67
+ADDED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:4:5-67
 	android:name
-		ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:4:22-64
+		ADDED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:4:22-64
 uses-permission#android.permission.FOREGROUND_SERVICE
-ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:5:5-77
+ADDED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:5:5-77
 	android:name
-		ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:5:22-74
+		ADDED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:5:22-74
 uses-permission#android.permission.ACCESS_NETWORK_STATE
-ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:6:5-79
+ADDED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:6:5-79
 	android:name
-		ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:6:22-76
+		ADDED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:6:22-76
 uses-feature#android.hardware.touchscreen
-ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:8:5-90
+ADDED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:8:5-90
 	android:required
-		ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:8:63-87
+		ADDED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:8:63-87
 	android:name
-		ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:8:19-62
+		ADDED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:8:19-62
 uses-feature#android.software.leanback
-ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:9:5-86
+ADDED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:9:5-86
 	android:required
-		ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:9:60-83
+		ADDED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:9:60-83
 	android:name
-		ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:9:19-59
+		ADDED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:9:19-59
 application
-ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:11:5-40:19
-INJECTED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:11:5-40:19
+ADDED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:11:5-40:19
+INJECTED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:11:5-40:19
 MERGED from [androidx.emoji2:emoji2:1.2.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\e22d8ca9f0b6778e47a8d03b7bd8bcda\transformed\emoji2-1.2.0\AndroidManifest.xml:23:5-33:19
 MERGED from [androidx.emoji2:emoji2:1.2.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\e22d8ca9f0b6778e47a8d03b7bd8bcda\transformed\emoji2-1.2.0\AndroidManifest.xml:23:5-33:19
 MERGED from [androidx.core:core:1.12.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\cdc1a7f570ce9402faa050b8136da29f\transformed\core-1.12.0\AndroidManifest.xml:28:5-89
@@ -105,71 +105,71 @@ MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Inspiron
 MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\e9678b4cc7f19bdf6e0ec4ba4ceef2ff\transformed\startup-runtime-1.1.1\AndroidManifest.xml:25:5-31:19
 MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\e9678b4cc7f19bdf6e0ec4ba4ceef2ff\transformed\startup-runtime-1.1.1\AndroidManifest.xml:25:5-31:19
 	android:extractNativeLibs
-		INJECTED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml
+		INJECTED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml
 	android:appComponentFactory
 		ADDED from [androidx.core:core:1.12.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\cdc1a7f570ce9402faa050b8136da29f\transformed\core-1.12.0\AndroidManifest.xml:28:18-86
 	android:label
-		ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:15:9-34
+		ADDED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:15:9-34
 	android:icon
-		ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:14:9-43
+		ADDED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:14:9-43
 	android:allowBackup
-		ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:13:9-35
+		ADDED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:13:9-35
 	android:theme
-		ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:16:9-46
+		ADDED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:16:9-46
 	android:usesCleartextTraffic
-		ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:17:9-44
+		ADDED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:17:9-44
 	android:name
-		ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:12:9-36
+		ADDED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:12:9-36
 activity#com.mitube.tv.ui.LoginActivity
-ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:19:9-28:20
+ADDED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:19:9-28:20
 	android:screenOrientation
-		ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:22:13-50
+		ADDED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:22:13-50
 	android:exported
-		ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:21:13-36
+		ADDED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:21:13-36
 	android:name
-		ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:20:13-45
+		ADDED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:20:13-45
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER+category:name:android.intent.category.LEANBACK_LAUNCHER
-ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:23:13-27:29
+ADDED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:23:13-27:29
 action#android.intent.action.MAIN
-ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:24:17-69
+ADDED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:24:17-69
 	android:name
-		ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:24:25-66
+		ADDED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:24:25-66
 category#android.intent.category.LAUNCHER
-ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:25:17-77
+ADDED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:25:17-77
 	android:name
-		ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:25:27-74
+		ADDED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:25:27-74
 category#android.intent.category.LEANBACK_LAUNCHER
-ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:26:17-86
+ADDED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:26:17-86
 	android:name
-		ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:26:27-83
+		ADDED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:26:27-83
 activity#com.mitube.tv.ui.MainBrowseActivity
-ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:30:9-31:53
+ADDED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:30:9-31:53
 	android:screenOrientation
-		ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:31:13-50
+		ADDED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:31:13-50
 	android:name
-		ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:30:19-56
+		ADDED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:30:19-56
 activity#com.mitube.tv.ui.PlayerActivity
-ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:32:9-34:53
+ADDED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:32:9-34:53
 	android:screenOrientation
-		ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:34:13-50
+		ADDED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:34:13-50
 	android:configChanges
-		ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:33:13-87
+		ADDED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:33:13-87
 	android:name
-		ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:32:19-52
+		ADDED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:32:19-52
 service#com.mitube.core.service.ProxyForegroundService
-ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:36:9-39:40
+ADDED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:36:9-39:40
 	android:exported
-		ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:39:13-37
+		ADDED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:39:13-37
 	android:foregroundServiceType
-		ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:38:13-60
+		ADDED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:38:13-60
 	android:name
-		ADDED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:37:13-74
+		ADDED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml:37:13-74
 uses-sdk
-INJECTED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml reason: use-sdk injection requested
-INJECTED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml
-INJECTED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml
-MERGED from [:core] D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\core\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
-MERGED from [:core] D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\core\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+INJECTED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml
+INJECTED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml
+MERGED from [:core] D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\core\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
+MERGED from [:core] D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\core\build\intermediates\merged_manifest\debug\processDebugManifest\AndroidManifest.xml:5:5-44
 MERGED from [androidx.appcompat:appcompat-resources:1.6.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\90a0b599474c83afbd6cd0947060d285\transformed\appcompat-resources-1.6.1\AndroidManifest.xml:20:5-44
 MERGED from [androidx.appcompat:appcompat-resources:1.6.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\90a0b599474c83afbd6cd0947060d285\transformed\appcompat-resources-1.6.1\AndroidManifest.xml:20:5-44
 MERGED from [androidx.appcompat:appcompat:1.6.1] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\62c2f4d849ef0912bb4f3744317e43a1\transformed\appcompat-1.6.1\AndroidManifest.xml:20:5-44
@@ -275,9 +275,9 @@ MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\User
 MERGED from [androidx.print:print:1.0.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\4d9bfe84faa45778284d5137cfe54433\transformed\print-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.print:print:1.0.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\4d9bfe84faa45778284d5137cfe54433\transformed\print-1.0.0\AndroidManifest.xml:20:5-44
 	android:targetSdkVersion
-		INJECTED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml
+		INJECTED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from D:\Sources\amaillo\utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml
+		INJECTED from D:\Sources\CSADn\Utilities\Dash MPD Player\mitube.app\tv\src\main\AndroidManifest.xml
 provider#androidx.startup.InitializationProvider
 ADDED from [androidx.emoji2:emoji2:1.2.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\e22d8ca9f0b6778e47a8d03b7bd8bcda\transformed\emoji2-1.2.0\AndroidManifest.xml:24:9-32:20
 MERGED from [androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Inspiron15\.gradle\caches\8.10.2\transforms\2183ab98eb80bf3b5c37351e38607720\transformed\lifecycle-process-2.7.0\AndroidManifest.xml:24:9-32:20

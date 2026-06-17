@@ -90,8 +90,45 @@ async function requestCdnToken(
   return cdnToken;
 }
 
+/**
+ * Request CDN token via the backend proxy.
+ * The backend's HttpClient can set Origin/Referer/User-Agent headers
+ * (unlike XHR in the browser), producing a valid CDN token.
+ * Requires a valid JWT (from login) sent as Bearer auth.
+ * Channel headers (Origin/Referer/User-Agent) are forwarded as
+ * X-Proxy-* headers so the backend's CdnTokenService can use the
+ * correct channel-specific values when requesting the CDN token.
+ */
+async function requestCdnTokenViaBackend(
+  mpdUrl: string,
+  backendUrl: string,
+  jwtToken: string,
+  channelHeaders?: Record<string, string>
+): Promise<string> {
+  const cleanUrl = backendUrl.replace(/\/+$/, "");
+  const endpoint = `${cleanUrl}/api/proxy/cdn-token?url=${encodeURIComponent(mpdUrl)}`;
+  const reqHeaders: Record<string, string> = {
+    Authorization: `Bearer ${jwtToken}`,
+  };
+  // Forward channel headers as X-Proxy-* so the backend can inject them
+  // into the CDN token generation request (XHR can't set Origin/Referer/UA directly).
+  if (channelHeaders) {
+    if (channelHeaders["Origin"]) reqHeaders["X-Proxy-Origin"] = channelHeaders["Origin"];
+    if (channelHeaders["Referer"]) reqHeaders["X-Proxy-Referer"] = channelHeaders["Referer"];
+    if (channelHeaders["User-Agent"]) reqHeaders["X-Proxy-User-Agent"] = channelHeaders["User-Agent"];
+  }
+  const text = await xhrFetchText(endpoint, reqHeaders);
+  const parsed = JSON.parse(text);
+  const cdnToken = parsed.cdnToken || parsed.token;
+  if (!cdnToken) {
+    throw new Error(`Backend CDN token response missing cdnToken: ${text.substring(0, 100)}`);
+  }
+  console.log("[TokenService] CDN token obtained via backend");
+  return cdnToken;
+}
+
 function isFlowChannel(headers?: Record<string, string>): boolean {
   return headers !== undefined && headers !== null && Object.keys(headers).length > 0;
 }
 
-export const TokenService = { getBearerToken, invalidateBearer, requestCdnToken, isFlowChannel };
+export const TokenService = { getBearerToken, invalidateBearer, requestCdnToken, requestCdnTokenViaBackend, isFlowChannel };

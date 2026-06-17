@@ -68,10 +68,28 @@
                 <div class="player-bottom-bar" id="player-bottom-bar">
                     <button id="btn-play" class="player-btn" tabindex="0">⏸</button>
                     <span class="player-time" id="player-time">00:00 / 00:00</span>
+                    <button id="btn-settings" class="player-btn" tabindex="0">⚙</button>
                     <button id="btn-back" class="player-btn player-back-btn" tabindex="0">← Volver</button>
                 </div>
             </div>
             <p id="player-error" class="player-error"></p>
+
+            <!-- Player Settings inline overlay (Netflix-style) -->
+            <div id="player-settings" class="player-settings">
+                <div class="ps-header">⚙ Settings</div>
+                <div class="ps-row" data-cat="quality">
+                    <span class="ps-label">Calidad</span>
+                    <span class="ps-value" id="ps-quality"><span class="ps-arrow hidden">&lt;</span> <span id="ps-quality-val">Auto</span> <span class="ps-arrow">&gt;</span></span>
+                </div>
+                <div class="ps-row" data-cat="audio">
+                    <span class="ps-label">Audio</span>
+                    <span class="ps-value" id="ps-audio"><span class="ps-arrow hidden">&lt;</span> <span id="ps-audio-val">-</span> <span class="ps-arrow">&gt;</span></span>
+                </div>
+                <div class="ps-row" data-cat="subtitle">
+                    <span class="ps-label">Subtítulos</span>
+                    <span class="ps-value" id="ps-subtitle"><span class="ps-arrow hidden">&lt;</span> <span id="ps-subtitle-val">Off</span> <span class="ps-arrow">&gt;</span></span>
+                </div>
+            </div>
         </div>
 
         <div id="settings-view" class="view settings-overlay">

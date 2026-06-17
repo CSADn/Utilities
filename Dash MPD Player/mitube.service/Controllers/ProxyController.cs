@@ -10,13 +10,20 @@ namespace mitube.service.Controllers;
 public class ProxyController : ControllerBase
 {
     private readonly ILogger<ProxyController> _logger;
-    // Separate clients for manifest/segments (same strategy as original WPF)
-    private static readonly HttpClient _httpClientManifest = new HttpClient
+    // Manifest client: don't follow redirects — Shaka's requestFilter re-routes the
+    // redirect URL through the proxy, ensuring sip (source IP) consistency.
+    private static readonly HttpClient _httpClientManifest = new HttpClient(new HttpClientHandler
+    {
+        AllowAutoRedirect = false
+    })
     {
         Timeout = TimeSpan.FromSeconds(30),
         MaxResponseContentBufferSize = 50 * 1024 * 1024 // 50 MB
     };
-    private static readonly HttpClient _httpClientSegment = new HttpClient
+    private static readonly HttpClient _httpClientSegment = new HttpClient(new HttpClientHandler
+    {
+        AllowAutoRedirect = false
+    })
     {
         Timeout = TimeSpan.FromSeconds(120),
         MaxResponseContentBufferSize = 100 * 1024 * 1024 // 100 MB
@@ -45,6 +52,10 @@ public class ProxyController : ControllerBase
 
         _logger.LogDebug("Proxy [{Method}] {Url}", HttpContext.Request.Method, url);
 
+        // Log received X-Proxy-* headers for debugging header forwarding
+        _logger.LogDebug("Proxy X-Proxy-Origin: {Origin}, X-Proxy-Referer: {Referer}, X-Proxy-User-Agent: {UserAgent}",
+            origin ?? "(null)", referer ?? "(null)", userAgent ?? "(null)");
+
         try
         {
             var method = HttpContext.Request.Method.Equals("POST", StringComparison.OrdinalIgnoreCase)
@@ -53,13 +64,22 @@ public class ProxyController : ControllerBase
 
             using var msg = new HttpRequestMessage(method, url);
 
-            // Forward custom proxy headers as real HTTP headers
+            // Forward custom proxy headers as real HTTP headers.
+            // If client doesn't provide them, use defaults for known Flow CDNs.
+            var isFlowCdn = url.Contains("chromecast.cvattv.com.ar") || url.Contains("cdn-token.app.flow.com.ar") || url.Contains("edge-live");
             if (!string.IsNullOrWhiteSpace(origin))
                 msg.Headers.TryAddWithoutValidation("Origin", origin);
+            else if (isFlowCdn)
+                msg.Headers.TryAddWithoutValidation("Origin", "https://portal.app.flow.com.py");
             if (!string.IsNullOrWhiteSpace(referer))
                 msg.Headers.TryAddWithoutValidation("Referer", referer);
+            else if (isFlowCdn)
+                msg.Headers.TryAddWithoutValidation("Referer", "https://portal.app.flow.com.py/");
             if (!string.IsNullOrWhiteSpace(userAgent))
                 msg.Headers.TryAddWithoutValidation("User-Agent", userAgent);
+            else if (isFlowCdn)
+                msg.Headers.TryAddWithoutValidation("User-Agent",
+                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36");
 
             // Forward Range header (byte-range requests from Shaka)
             var rangeHeader = HttpContext.Request.Headers.Range.ToString();
@@ -77,6 +97,17 @@ public class ProxyController : ControllerBase
                 var contentType = HttpContext.Request.ContentType;
                 if (!string.IsNullOrWhiteSpace(contentType))
                     msg.Content.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse(contentType);
+            }
+
+            // Log the upstream headers we're about to send (first request only, avoid spam for segments)
+            var isManifest = !url.Contains("/segment/") && !url.Contains(".mp4") && !url.Contains(".m4s") && !url.Contains(".ts");
+            if (isManifest)
+            {
+                var originHdr = msg.Headers.TryGetValues("Origin", out var ov) ? string.Join(",", ov) : "(not set)";
+                var refererHdr = msg.Headers.TryGetValues("Referer", out var rv) ? string.Join(",", rv) : "(not set)";
+                var uaHdr = msg.Headers.TryGetValues("User-Agent", out var uv) ? string.Join(",", uv) : "(not set)";
+                _logger.LogInformation("Proxy upstream headers: Origin={Origin}, Referer={Referer}, User-Agent={UserAgent}",
+                    originHdr, refererHdr, uaHdr);
             }
 
             // Choose client based on URL path: segments get 120s timeout
@@ -131,9 +162,27 @@ public class ProxyController : ControllerBase
             }
             else
             {
-                var errorBody = await response.Content.ReadAsStringAsync();
-                _logger.LogWarning("Proxy upstream error {Status} for {Url}: {Body}",
-                    (int)response.StatusCode, url, errorBody.Length > 200 ? errorBody[..200] : errorBody);
+                var statusCode = (int)response.StatusCode;
+                // Log redirect responses (3xx) with Location header for diagnosis
+                if (statusCode is >= 300 and < 400)
+                {
+                    var location = response.Headers.Location?.ToString() ?? "(none)";
+                    _logger.LogWarning("Proxy redirect [{Status}] for {Url} -> {Location}",
+                        statusCode, url, location);
+                }
+                else if (statusCode == 403)
+                {
+                    // Log 403 response body to diagnose CDN rejection reason
+                    var errorBody = await response.Content.ReadAsStringAsync();
+                    _logger.LogWarning("Proxy upstream error 403 for {Url} - Body: {Body}",
+                        url, errorBody.Length > 500 ? errorBody[..500] : errorBody);
+                }
+                else
+                {
+                    var errorBody = await response.Content.ReadAsStringAsync();
+                    _logger.LogWarning("Proxy upstream error {Status} for {Url}: {Body}",
+                        statusCode, url, errorBody.Length > 200 ? errorBody[..200] : errorBody);
+                }
                 await response.Content.CopyToAsync(HttpContext.Response.Body);
             }
         }
@@ -155,6 +204,9 @@ public class ProxyController : ControllerBase
     [HttpGet("cdn-token")]
     public async Task<IActionResult> GetCdnToken(
         [FromQuery] string url,
+        [FromHeader(Name = "X-Proxy-Origin")] string? origin,
+        [FromHeader(Name = "X-Proxy-Referer")] string? referer,
+        [FromHeader(Name = "X-Proxy-User-Agent")] string? userAgent,
         [FromServices] CdnTokenService cdnTokenService)
     {
         if (string.IsNullOrWhiteSpace(url))
@@ -162,8 +214,25 @@ public class ProxyController : ControllerBase
 
         try
         {
+            // Build channel headers dictionary from client-provided proxy headers
+            var channelHeaders = new Dictionary<string, string>();
+            if (!string.IsNullOrWhiteSpace(origin)) channelHeaders["Origin"] = origin;
+            if (!string.IsNullOrWhiteSpace(referer)) channelHeaders["Referer"] = referer;
+            if (!string.IsNullOrWhiteSpace(userAgent)) channelHeaders["User-Agent"] = userAgent;
+
+            _logger.LogInformation("GetCdnToken: received channel headers - Origin={Origin}, Referer={Referer}, User-Agent={UserAgent}",
+                origin ?? "(null)", referer ?? "(null)", userAgent ?? "(null)");
+
+            // URLs with embedded tok_ JWT don't need CDN token generation
+            if (url.Contains("/tok_"))
+            {
+                _logger.LogInformation("GetCdnToken: URL has embedded token, skipping");
+                return Ok(new { cdnToken = (string?)null, bearerToken = (string?)null, message = "embedded" });
+            }
+
             var bearerToken = await cdnTokenService.GetBearerTokenAsync();
-            var cdnToken = await cdnTokenService.RequestCdnTokenAsync(url, bearerToken, null);
+            var cdnToken = await cdnTokenService.RequestCdnTokenAsync(
+                url, bearerToken, channelHeaders.Count > 0 ? channelHeaders : null);
             return Ok(new { cdnToken, bearerToken });
         }
         catch (Exception ex)
