@@ -1,0 +1,31 @@
+[Unit]
+Description=NETBash - __APP__
+After=network.target
+
+[Service]
+WorkingDirectory=__CURRENT_DIR__
+ExecStart=/usr/bin/dotnet __DLL_PATH__
+Restart=always
+RestartSec=10
+KillSignal=SIGINT
+SyslogIdentifier=netbash-__APP__
+User=www-data
+Group=www-data
+
+EnvironmentFile=-/opt/netbash/env/__APP__
+
+# Hardening
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectKernelModules=true
+ProtectKernelTunables=true
+ProtectControlGroups=true
+CapabilityBoundingSet=
+SystemCallArchitectures=native
+MemoryDenyWriteExecute=true
+
+[Install]
+WantedBy=multi-user.target

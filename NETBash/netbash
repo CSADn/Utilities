@@ -1,0 +1,141 @@
+#!/usr/bin/env bash
+# NETBash - CLI entry point: install, deploy, rollback, status
+set -Eeuo pipefail
+
+NETBASH_DIR="$(realpath "$(dirname "$0")")" && readonly NETBASH_DIR
+source "${NETBASH_DIR}/lib/common.sh"
+
+# Print usage information and exit
+usage() {
+    cat <<EOF
+NETBash v${NETBASH_VERSION} - Framework Bash para ASP.NET Core 10 en Ubuntu 24.04
+
+Uso:
+    netbash install   [opciones]   Instalar infraestructura completa
+    netbash deploy    [opciones]   Desplegar una aplicación
+    netbash rollback  [opciones]   Revertir a versión anterior
+    netbash status    [opciones]   Mostrar estado de aplicaciones
+
+Opciones globales:
+    --app NAME        Nombre de la aplicación (requerido)
+    --domain DOMAIN   Dominio público (para SSL)
+    --email EMAIL     Email para Let's Encrypt
+    --port PORT       Puerto interno de la app (default: 5000)
+    --sdk             Instalar también el SDK de .NET
+    --force           Omitir confirmaciones
+    --dry-run         Mostrar lo que se haría sin ejecutar
+    --help, -h        Mostrar esta ayuda
+
+Ejemplos:
+    netbash install --app mi-api --domain api.ejemplo.com --email admin@ejemplo.com
+    netbash deploy --app mi-api --port 5000
+    netbash rollback --app mi-api
+    netbash status
+EOF
+    exit 0
+}
+
+NETBASH_APP=""
+NETBASH_DOMAIN=""
+NETBASH_EMAIL=""
+NETBASH_PORT=5000
+NETBASH_SDK=false
+NETBASH_FORCE=false
+NETBASH_DRY_RUN=false
+
+# Parse CLI arguments into global variables
+parse_args() {
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            --app)
+                if [[ -z "${2:-}" ]]; then die "--app requires a value"; fi
+                NETBASH_APP="$2"; shift 2 ;;
+            --domain)
+                if [[ -z "${2:-}" ]]; then die "--domain requires a value"; fi
+                NETBASH_DOMAIN="$2"; shift 2 ;;
+            --email)
+                if [[ -z "${2:-}" ]]; then die "--email requires a value"; fi
+                NETBASH_EMAIL="$2"; shift 2 ;;
+            --port)
+                if [[ -z "${2:-}" ]]; then die "--port requires a value"; fi
+                NETBASH_PORT="$2"; shift 2 ;;
+            --sdk)
+                NETBASH_SDK=true; shift ;;
+            --force)
+                NETBASH_FORCE=true; shift ;;
+            --dry-run)
+                NETBASH_DRY_RUN=true; shift ;;
+            --help|-h)
+                usage ;;
+            install|deploy|rollback|status)
+                NETBASH_COMMAND="$1"; shift ;;
+            *)
+                die "Unknown argument: $1. Use --help for usage." ;;
+        esac
+    done
+
+    if [[ -z "${NETBASH_COMMAND:-}" ]]; then
+        die "No command specified. Use: install, deploy, rollback, or status."
+    fi
+}
+
+# Main entry point: validate environment, parse args, dispatch to subcommand
+main() {
+    require_bash5
+    verificar_requisitos
+
+    parse_args "$@"
+
+    export NETBASH_APP NETBASH_DOMAIN NETBASH_EMAIL NETBASH_PORT
+    export NETBASH_SDK NETBASH_FORCE NETBASH_DRY_RUN
+
+    case "$NETBASH_COMMAND" in
+        install)
+            source "${NETBASH_DIR}/scripts/install.sh"
+            cmd_install
+            ;;
+        deploy)
+            source "${NETBASH_DIR}/scripts/deploy.sh"
+            cmd_deploy
+            ;;
+        rollback)
+            source "${NETBASH_DIR}/scripts/rollback.sh"
+            cmd_rollback
+            ;;
+        status)
+            cmd_status
+            ;;
+    esac
+}
+
+# Show the status of all installed modules and deployed releases
+cmd_status() {
+    local state_dir="${NETBASH_ROOT}/.state"
+    if [[ ! -d "$state_dir" ]]; then
+        __log INFO "No applications installed yet."
+        return 0
+    fi
+    __log INFO "Installed modules:"
+    for f in "$state_dir"/*; do
+        [[ -f "$f" ]] && __log INFO "  - $(basename "$f")"
+    done
+    __log INFO "---"
+    if [[ -d "${NETBASH_ROOT}/releases" ]]; then
+        for app_dir in "${NETBASH_ROOT}/releases"/*/; do
+            local app_name
+            app_name="$(basename "$app_dir")"
+            local current_link="${NETBASH_ROOT}/current/${app_name}"
+            if [[ -L "$current_link" ]]; then
+                local target
+                target="$(readlink "$current_link")"
+                __log INFO "App '$app_name' -> $target"
+            else
+                __log INFO "App '$app_name' (no current release)"
+            fi
+        done
+    fi
+}
+
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    main "$@"
+fi
